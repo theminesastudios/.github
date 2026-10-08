@@ -48,9 +48,14 @@
             >
           </nav>
 
-          <button class="db-launch" type="button" disabled aria-disabled="true">
-            Launch Game
-          </button>
+          <a
+            class="db-launch db-launch--ready"
+            href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
+            data-launcher-download
+          >
+            Download Launcher
+            <small>Early Access</small>
+          </a>
         </header>
 
         <div class="db-hero__content">
@@ -70,7 +75,44 @@
               A free-to-play, side-scrolling brawler with light RPG and MMO
               game!
             </p>
-            <p class="db-copy__status">Coming Soon</p>
+            <p class="db-copy__status">Early Access</p>
+
+            <div class="db-download" id="download">
+              <a
+                class="db-download__button"
+                href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
+                data-launcher-download
+              >
+                <span data-launcher-label>Download the Launcher</span>
+              </a>
+              <p class="db-download__meta" data-launcher-meta>
+                Available for Windows and macOS
+              </p>
+              <p class="db-download__release">
+                Public release on
+                <time datetime="2026-10-30">October 30</time>
+              </p>
+              <p class="db-download__other">
+                Other downloads:
+                <a
+                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
+                  data-launcher-asset="win-x64"
+                  >Windows 64-bit</a
+                >
+                &middot;
+                <a
+                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
+                  data-launcher-asset="win-ia32"
+                  >Windows 32-bit</a
+                >
+                &middot;
+                <a
+                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
+                  data-launcher-asset="mac"
+                  >macOS</a
+                >
+              </p>
+            </div>
           </div>
         </div>
 
@@ -84,5 +126,6 @@
         </div>
       </section>
     </main>
+    <script src="dungeon-blitz-r.js" defer></script>
   </body>
 </html>
