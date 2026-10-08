@@ -14,6 +14,7 @@
 	const labelEl = document.querySelector("[data-launcher-label]");
 	const metaEl = document.querySelector("[data-launcher-meta]");
 	const assetLinks = document.querySelectorAll("[data-launcher-asset]");
+	const otherEl = document.querySelector("[data-launcher-other]");
 	if (!buttons.length) return;
 
 	function detectPlatform() {
@@ -29,14 +30,22 @@
 	const platform = detectPlatform();
 	const target = ASSETS[platform];
 
+	// The launcher is desktop-only, so a phone or tablet gets the buttons disabled. This keys on
+	// the device rather than the viewport: a narrow desktop window can still download.
+	if (platform === "mobile") {
+		buttons.forEach(function (button) {
+			button.removeAttribute("href");
+			button.setAttribute("aria-disabled", "true");
+			button.classList.add("is-disabled");
+		});
+		if (metaEl) metaEl.hidden = true;
+		if (otherEl) otherEl.hidden = true;
+		return;
+	}
+
 	if (labelEl && target) labelEl.textContent = "Download for " + target.name;
-	if (metaEl) {
-		if (platform === "mobile") {
-			metaEl.textContent =
-				"The launcher runs on Windows and macOS. Open this page on your computer to download it.";
-		} else if (platform === "linux") {
-			metaEl.textContent = "A Linux build is not available yet. Windows and macOS for now.";
-		}
+	if (metaEl && platform === "linux") {
+		metaEl.textContent = "A Linux build is not available yet. Windows and macOS for now.";
 	}
 
 	// Without the release list every link keeps pointing at the release page, which still works.

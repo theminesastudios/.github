@@ -263,6 +263,20 @@ a {
   white-space: nowrap;
 }
 
+.db-launch--ready.is-disabled,
+.db-download__button.is-disabled {
+  border-color: rgba(180, 180, 180, 0.24);
+  background: linear-gradient(180deg, rgba(119, 119, 119, 0.28) 0%, rgba(65, 65, 65, 0.22) 100%);
+  color: rgba(255, 255, 255, 0.52);
+  cursor: not-allowed;
+  filter: none;
+  transform: none;
+}
+
+.db-launch--ready.is-disabled small {
+  color: rgba(255, 255, 255, 0.42);
+}
+
 .db-hero__content {
   flex: 1;
   display: flex;
