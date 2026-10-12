@@ -31,8 +31,14 @@
 	const target = ASSETS[platform];
 
 	// The launcher is desktop-only, so a phone or tablet gets the buttons disabled. This keys on
-	// the device rather than the viewport: a narrow desktop window can still download.
+	// the device rather than the viewport: a narrow desktop window can still download. The
+	// browser version is played with a keyboard too, so it is disabled the same way.
 	if (platform === "mobile") {
+		document.querySelectorAll("[data-web-play]").forEach(function (button) {
+			button.removeAttribute("href");
+			button.setAttribute("aria-disabled", "true");
+			button.classList.add("is-disabled");
+		});
 		buttons.forEach(function (button) {
 			button.removeAttribute("href");
 			button.setAttribute("aria-disabled", "true");

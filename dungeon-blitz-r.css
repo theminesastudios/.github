@@ -229,6 +229,38 @@ a {
   transform: translateY(-1px);
 }
 
+.db-download__web {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 1.6rem;
+  border: 1px solid var(--accent-border);
+  border-radius: 0.3rem;
+  background: rgba(0, 0, 0, 0.28);
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.db-download__web small {
+  color: var(--muted);
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+}
+
+.db-download__web:hover,
+.db-download__web:focus-visible {
+  background: rgba(199, 123, 87, 0.22);
+  transform: translateY(-1px);
+}
+
+.db-download__web:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .db-download__meta,
 .db-download__release,
 .db-download__other {
@@ -264,7 +296,8 @@ a {
 }
 
 .db-launch--ready.is-disabled,
-.db-download__button.is-disabled {
+.db-download__button.is-disabled,
+.db-download__web.is-disabled {
   border-color: rgba(180, 180, 180, 0.24);
   background: linear-gradient(180deg, rgba(119, 119, 119, 0.28) 0%, rgba(65, 65, 65, 0.22) 100%);
   color: rgba(255, 255, 255, 0.52);
