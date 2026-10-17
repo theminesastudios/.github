@@ -1,0 +1,633 @@
+/* Member showcase (Figma: v6/Minesa > Desktop - Team/Member, 1512 × 1161).
+   style.css is shared for fonts and the stamp nav; its home-page layout rules are reset here.
+   Exposure Trial is set in EB Garamond Bold, as on the team page. */
+
+/* "Meet with", the avatar and the name morph in from the team lineup (and back). */
+@view-transition {
+  navigation: auto;
+}
+
+.member-page {
+  --m-bg: #040405;
+  --m-muted: rgba(255, 255, 255, 0.3);
+  --m-faint: rgba(255, 255, 255, 0.1);
+  --m-spring: linear(0, 0.157, 0.438, 0.66, 0.808, 0.897, 0.948, 0.976, 0.99, 0.997, 1);
+  --m-spring-pop: linear(0, 0.204, 0.624, 0.96, 1.08, 1.06, 1.02, 1);
+  --m-gutter: clamp(16px, 9.9vw, 150px);
+  --primary: #ffffff;
+
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--m-bg);
+  color: #fff;
+}
+
+.member-page main {
+  display: block;
+  height: auto;
+}
+
+.member-page main:focus {
+  outline: none;
+}
+
+.member-page ::selection {
+  background: var(--member-color, #775d50);
+  color: #040405;
+}
+
+.m-skip {
+  position: fixed;
+  z-index: 20;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border: 1px solid #fff !important;
+  border-radius: 6px;
+  background: var(--m-bg);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transform: translateY(-200%);
+}
+
+.m-skip:focus-visible {
+  transform: none;
+}
+
+/* ---------- Navigation ---------- */
+.m-header {
+  position: relative;
+  z-index: 5;
+  height: 100px;
+}
+
+.m-logo {
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  display: inline-flex;
+  border: 0 !important;
+  border-radius: 6px;
+}
+
+.m-logo img {
+  display: block;
+}
+
+.m-logo:focus-visible,
+.member-page .site-nav__item:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.member-page .site-nav {
+  position: absolute;
+}
+
+.member-page .site-nav__item.is-current {
+  opacity: 1;
+}
+
+/* ---------- Layout ---------- */
+.member-page .m-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 32px;
+  max-width: calc(1212px + 2 * var(--m-gutter));
+  margin: 0 auto;
+  padding: 30px var(--m-gutter) 30px;
+}
+
+/* ---------- Hero ---------- */
+.m-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.25em;
+  row-gap: 0.1em;
+  margin: 0;
+  font-family: var(--font-garamond);
+  font-size: clamp(56px, 8.47vw, 128px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.m-meet,
+.m-name {
+  white-space: nowrap;
+}
+
+/* ---------- Member switcher ---------- */
+.m-hero-wrap {
+  position: relative;
+}
+
+/* The avatar and name are a button that lists the other members. */
+.m-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0.2em;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.m-profile:focus-visible {
+  outline: 2px solid var(--member-color);
+  outline-offset: 6px;
+}
+
+.m-profile:hover .m-name,
+.m-hero-wrap.is-open .m-name {
+  color: #fff;
+}
+
+/* (display: block undoes style.css's global centred-flex <nav>.) */
+.m-roster {
+  position: absolute;
+  display: block;
+  z-index: 6;
+  top: calc(var(--roster-y, 100%) + 10px);
+  left: var(--roster-x, 0);
+  min-width: 240px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(14, 14, 16, 0.92);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transform-origin: 30px 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.35s var(--m-spring),
+    visibility 0s linear 0.35s;
+}
+
+.m-hero-wrap.is-open .m-roster {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.4s var(--m-spring-pop),
+    visibility 0s;
+}
+
+.m-roster ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.m-roster li {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s var(--m-spring);
+}
+
+.m-hero-wrap.is-open .m-roster li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 40ms + 40ms);
+}
+
+/* The global `li a` menu styles are reset for these links. */
+.member-page .m-roster__link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px 8px 8px;
+  border: 0;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 2.1px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.member-page .m-roster__link:hover,
+.member-page .m-roster__link:focus-visible {
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  transform: none;
+  outline: none;
+}
+
+.m-roster__avatar {
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: transform 0.4s var(--m-spring-pop);
+}
+
+.m-roster__link:hover .m-roster__avatar,
+.m-roster__link:focus-visible .m-roster__avatar {
+  transform: scale(1.1);
+}
+
+.member-page .m-roster__all {
+  display: block;
+  margin: 6px 4px 2px;
+  padding: 8px 8px 4px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.member-page .m-roster__all:hover,
+.member-page .m-roster__all:focus-visible {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: none;
+  color: #fff;
+  outline: none;
+}
+
+/* Figma: a 154px circle in the member's colour at 128px type. */
+.m-avatar {
+  display: block;
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--member-color);
+  transition: transform 0.6s var(--m-spring-pop);
+}
+
+.m-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.m-avatar:hover {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.m-name {
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 2.1px;
+}
+
+.m-hero--missing .m-meet {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- About ---------- */
+.m-about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.m-quote {
+  margin: 0;
+  max-width: 80ch;
+  color: #fff;
+}
+
+.m-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m-line {
+  margin: 0;
+  color: var(--m-muted);
+  animation: m-rise 0.6s var(--m-spring) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 120ms);
+}
+
+/* A highlighted project: its mark, then its name in white (Figma gap 10px). */
+.member-page .m-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  padding: 0;
+  border: 0;
+  color: #fff;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.m-chip__icon {
+  display: block;
+  flex: none;
+  height: 19px;
+  width: auto;
+  transition: transform 0.45s var(--m-spring-pop);
+}
+
+.member-page a.m-chip:hover {
+  border: 0;
+  background: none;
+  color: #fff;
+  transform: none;
+}
+
+a.m-chip .m-chip__label {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+a.m-chip:hover .m-chip__label,
+a.m-chip:focus-visible .m-chip__label {
+  background-size: 100% 1px;
+}
+
+a.m-chip:hover .m-chip__icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+.member-page a.m-chip:focus-visible,
+.m-social:focus-visible,
+.m-inline-link:focus-visible {
+  outline: 2px solid var(--member-color, #fff);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.m-connect {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m-connect__title {
+  margin: 0;
+  color: var(--m-muted);
+  font: inherit;
+}
+
+.m-connect__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The global `li` / `li a` menu styles are reset for these links. */
+.m-connect__list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.m-connect__list li + li::before {
+  content: "•";
+  color: var(--m-faint);
+}
+
+.member-page .m-social {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-height: 19px;
+  padding: 0;
+  border: 0;
+  color: #fff;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: color 0.2s ease;
+}
+
+.member-page .m-social:hover {
+  border: 0;
+  background: none;
+  color: var(--member-color);
+  transform: none;
+}
+
+.m-social img {
+  display: block;
+  transition: transform 0.45s var(--m-spring-pop);
+}
+
+.m-social:hover img {
+  transform: rotate(-12deg) scale(1.15);
+}
+
+.member-page .m-inline-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  color: #fff;
+}
+
+.m-signature {
+  display: block;
+  width: 133px;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* ---------- Gallery ---------- */
+.m-rule {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.m-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 600px));
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.m-shot {
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #000;
+  transition: transform 0.6s var(--m-spring-pop);
+}
+
+.m-shot:nth-child(odd):hover {
+  transform: rotate(-1.2deg) translateY(-4px);
+}
+
+.m-shot:nth-child(even):hover {
+  transform: rotate(1.2deg) translateY(-4px);
+}
+
+.m-shot__frame {
+  position: relative;
+  display: block;
+  height: 362px;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.m-shot__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.m-shot__img {
+  object-fit: cover;
+  opacity: 0;
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s var(--m-spring);
+}
+
+/* Photos fade in once loaded instead of drawing in strips. */
+.m-shot__img.is-loaded {
+  opacity: 1;
+}
+
+/* Arriving by view transition: no entrance animations (see member.html). */
+.m-vt-in .m-line {
+  animation: none;
+}
+
+.m-vt-in .m-shot__img {
+  opacity: 1;
+  transition: none;
+}
+
+.m-shot:hover .m-shot__img {
+  transform: scale(1.03);
+}
+
+@keyframes m-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ---------- View transition ---------- */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: var(--m-spring, ease);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+/* ---------- Smaller windows ---------- */
+@media (max-width: 900px) {
+  .m-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .m-shot__frame {
+    height: auto;
+    aspect-ratio: 580 / 362;
+  }
+}
+
+@media (max-width: 768px) {
+  .m-logo {
+    top: 20px;
+    left: 20px;
+  }
+
+  .member-page .m-main {
+    gap: 28px;
+    padding-top: 12px;
+  }
+
+  .m-hero {
+    font-size: clamp(44px, 13vw, 72px);
+  }
+
+  .m-about {
+    gap: 28px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .m-chip__icon {
+    height: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  .m-line {
+    animation: none;
+  }
+
+  .m-avatar,
+  .m-roster,
+  .m-roster li,
+  .m-shot,
+  .m-chip__icon,
+  .m-social img {
+    transition: none;
+  }
+
+  .m-avatar:hover,
+  .m-shot:nth-child(n):hover,
+  a.m-chip:hover .m-chip__icon,
+  .m-social:hover img {
+    transform: none;
+  }
+}
