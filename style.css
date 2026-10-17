@@ -18,6 +18,17 @@
   }
 }
 
+/* Page-to-page navigations cross-fade instead of cutting (pages add their own morphs). */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -228,6 +239,102 @@ nav a {
   font-size: small;
   &:hover {
     border: none;
+  }
+}
+
+/* Team / Updates stamps, ported from the minesa-v6 navbar. */
+.site-nav {
+  /* Shared by every page, so the stamps stay put while the rest cross-fades. */
+  view-transition-name: site-nav;
+  position: fixed;
+  top: 25px;
+  right: 50px;
+  z-index: 5;
+  align-items: flex-start;
+  gap: 0;
+  transition:
+    opacity 260ms ease,
+    visibility 260ms ease;
+}
+
+.site-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 58px;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--primary);
+  opacity: 0.7;
+  transition: opacity 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border: none;
+    background: none;
+    color: var(--primary);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--minesa-brown);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+.site-nav__item img {
+  display: block;
+  width: 50px;
+  height: auto;
+  transition: transform 200ms ease;
+}
+
+.site-nav__item--team img {
+  transform: rotate(-3deg);
+}
+
+.site-nav__item--updates img {
+  transform: rotate(4deg);
+}
+
+.site-nav__item:hover img,
+.site-nav__item:focus-visible img {
+  transform: rotate(0deg) scale(1.06);
+}
+
+.site-nav__divider {
+  width: 49px;
+  height: 2px;
+  margin-top: 25px;
+  background: var(--primary);
+  opacity: 0.3;
+}
+
+body.game-on .site-nav {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .site-nav {
+    top: 20px;
+    right: 20px;
+    transform: scale(0.9);
+    transform-origin: top right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__item img,
+  .site-nav__item:hover img {
+    transition: none;
   }
 }
 

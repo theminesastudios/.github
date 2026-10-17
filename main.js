@@ -750,6 +750,8 @@
 			link.addEventListener("mouseenter", startCharge);
 			link.addEventListener("mouseleave", cancelCharge);
 		});
+		// Tapping the logo opens the feedback postcard (feedback.js); stop any charge in progress.
+		document.addEventListener("feedback:open", cancelCharge);
 	}
 
 	window.addEventListener("mousemove", updatePointer, { passive: true });
