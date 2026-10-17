@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team | The Minesa Studios</title>
+    <meta
+      name="description"
+      content="Meet The Minesa Studios: Cheetoo, Telahair, Neo and Mica, the people bringing fun back to apps, games and your computer."
+    />
+    <link rel="canonical" href="https://theminesa.studio/team.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Meet with team | The Minesa Studios" />
+    <meta property="og:description" content="Cheetoo, Telahair, Neo and Mica: the people behind The Minesa Studios." />
+    <meta property="og:url" content="https://theminesa.studio/team.html" />
+    <meta name="theme-color" content="#040405" />
+    <link rel="stylesheet" href="style.css?v=9" />
+    <link rel="stylesheet" href="team.css?v=11" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script>
+      // Photos stay hidden until team.js has loaded them (with a safety net if it never runs).
+      // Arriving by view transition from a member page, the line-up shows at once instead.
+      document.documentElement.classList.add("js");
+      addEventListener("pagereveal", (event) => {
+        if (event.viewTransition) document.documentElement.classList.add("team-no-arrival");
+      });
+      setTimeout(() => document.querySelector(".team-stage")?.classList.add("is-ready"), 4000);
+    </script>
+    <script type="module" src="team.js?v=10"></script>
+  </head>
+  <body class="team-page">
+    <a class="team-skip" href="#team">Skip to the team</a>
+
+    <header class="team-header">
+      <a class="team-logo" href="./index.html" aria-label="The Minesa Studios home">
+        <img src="./assets/navigation-assets/Logo.svg" alt="" width="52" height="51" />
+      </a>
+
+      <nav class="site-nav" aria-label="Main">
+        <a class="site-nav__item site-nav__item--team" href="./team.html" aria-current="page">
+          <img src="./assets/navigation-assets/TEAM%20STAMP.svg" alt="" width="50" height="50" />
+          <span>Team</span>
+        </a>
+        <span class="site-nav__divider" aria-hidden="true"></span>
+        <a class="site-nav__item site-nav__item--updates" href="./updates.html">
+          <img src="./assets/navigation-assets/RELEASE%20STAMP.svg" alt="" width="50" height="50" />
+          <span>Updates</span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="team-main" id="team" tabindex="-1">
+      <div class="team-stage">
+        <h1 class="team-title">
+          <span class="team-title-lead" style="view-transition-name: meet-with">Meet with</span>
+          <span class="team-title-word" style="view-transition-name: meet-name" aria-hidden="true"><span class="team-title-text">team</span></span>
+          <span class="team-sr">team</span>
+        </h1>
+
+        <!-- Positions are the Figma frame's (Desktop - Team, 1512 × 982) in px; data-crop is each photo
+             fill's CROP imageTransform (x y width height of the visible region, 0–1). -->
+        <ul class="team-lineup">
+          <li
+            class="member"
+            data-member="cheetoo"
+            style="--color: #f8ade3; --px: 0; --py: 438.7; --pw: 477.02; --ph: 606.73; --tx: 119; --ty: 404"
+          >
+            <a class="member-link" href="./member.html?user=cheetoo">
+              <span class="member-portrait">
+                <img data-crop="0.12327273 0.17142858 0.87646759 0.82857144" src="./assets/team/cheetoo.webp?v=7" alt="Cheetoo" width="880" height="1184" />
+              </span>
+              <span class="member-tag">
+                <img class="member-avatar" style="view-transition-name: avatar-cheetoo" src="./assets/team/avatar-cheetoo.svg" alt="" width="50" height="50" />
+                <span class="member-name">Cheetoo</span>
+              </span>
+            </a>
+          </li>
+          <li
+            class="member"
+            data-member="telahair"
+            style="--color: #9977f7; --px: 299.46; --py: 358.63; --pw: 552.77; --ph: 729.16; --tx: 443; --ty: 304"
+          >
+            <a class="member-link" href="./member.html?user=telahair">
+              <span class="member-portrait">
+                <img data-crop="0.18666634 0.08845947 0.69103032 0.91154057" src="./assets/team/telahair.webp?v=7" alt="Telahair" width="1254" height="1254" />
+              </span>
+              <span class="member-tag">
+                <img class="member-avatar" style="view-transition-name: avatar-telahair" src="./assets/team/avatar-telahair.svg" alt="" width="50" height="50" />
+                <span class="member-name">Telahair</span>
+              </span>
+            </a>
+          </li>
+          <li
+            class="member"
+            data-member="neo"
+            data-contrast="1"
+            style="--color: #fc546d; --px: 639.49; --py: 304; --pw: 584.62; --ph: 837.43; --tx: 852; --ty: 254"
+          >
+            <a class="member-link" href="./member.html?user=neo">
+              <span class="member-portrait">
+                <img data-crop="0.15718563 0.18555771 0.83083838 0.58202934" src="./assets/team/neo.webp?v=7" alt="Neo" width="1072" height="2192" />
+              </span>
+              <span class="member-tag">
+                <img class="member-avatar" style="view-transition-name: avatar-neo" src="./assets/team/avatar-neo.svg" alt="" width="50" height="50" />
+                <span class="member-name">Neo</span>
+              </span>
+            </a>
+          </li>
+          <li
+            class="member"
+            data-member="mica"
+            data-contrast="1"
+            style="--color: #7375ff; --px: 966; --py: 372; --pw: 548.74; --ph: 837.43; --tx: 1224; --ty: 345"
+          >
+            <a class="member-link" href="./member.html?user=mica">
+              <span class="member-portrait">
+                <img data-crop="0.08829094 0.21525887 0.77948076 0.66394192" src="./assets/team/mica.webp?v=7" alt="Mica" width="768" height="1376" />
+              </span>
+              <span class="member-tag">
+                <img class="member-avatar" style="view-transition-name: avatar-mica" src="./assets/team/avatar-mica.svg" alt="" width="50" height="50" />
+                <span class="member-name">Mica</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>

@@ -4,14 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home | The Minesa Studios</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=9" />
+    <link rel="stylesheet" href="feedback.css?v=13" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Roboto+Mono:wght@400;600;700&display=swap"
+    />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <script defer src="main.js"></script>
+    <script type="module" src="feedback.js?v=11"></script>
   </head>
   <body>
+    <nav class="site-nav" aria-label="Main">
+      <a class="site-nav__item site-nav__item--team" href="./team.html">
+        <img src="./assets/navigation-assets/TEAM%20STAMP.svg" alt="" width="50" height="50" />
+        <span>Team</span>
+      </a>
+      <span class="site-nav__divider" aria-hidden="true"></span>
+      <a class="site-nav__item site-nav__item--updates" href="./updates.html">
+        <img src="./assets/navigation-assets/RELEASE%20STAMP.svg" alt="" width="50" height="50" />
+        <span>Updates</span>
+      </a>
+    </nav>
+
     <main>
       <div class="game-screen-content">
-        <header><a href="./static/index.html">
+        <header><a href="./static/index.html" aria-label="Send The Minesa Studios feedback" aria-haspopup="dialog" data-feedback-open>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 500 500"
@@ -669,15 +688,110 @@
       </div>
     </main>
 
-    <button class="game-close" id="game-close" type="button">Close Game</button>
-    <button class="game-restart" id="game-restart" type="button">Restart</button>
+    <!-- Feedback postcard (Figma: v6/Minesa > Feedback, Desktop - Ultra - 2) -->
+    <dialog class="fb" id="feedback" aria-labelledby="fb-title">
+      <button class="fb-close" type="button" data-feedback-close aria-label="Close feedback">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
 
-    <div class="game-hud" id="game-hud" aria-live="polite">
-      <div class="game-chip game-timer" id="game-timer">Launch in 5.0s</div>
-      <div class="game-chip game-score" id="game-score">Level 01 / Length 001</div>
-      <div class="game-chip game-status" id="game-status">Hover the Minesa logo to launch Ghost Grid.</div>
-    </div>
+      <form class="fb-form" id="fb-form" novalidate>
+        <!-- Left empty by people; bots that fill it are ignored (FormSubmit's honeypot). -->
+        <input class="fb-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="fb-stage-frame">
+        <div class="fb-stage">
+          <div class="fb-card" data-side="back">
+            <div class="fb-face fb-front" aria-hidden="true">
+              <div class="fb-front-panel">
+                <img class="fb-front-title" src="./assets/feedback/front-title.svg?v=2" alt="" width="594" height="126" loading="lazy" />
+                <div class="fb-front-scene">
+                  <img class="fb-front-istanbul" src="./assets/feedback/front-istanbul.svg" alt="" width="2507" height="359" loading="lazy" />
+                  <img class="fb-front-byline" src="./assets/feedback/front-byline.svg?v=2" alt="" width="42" height="21" loading="lazy" />
+                </div>
+              </div>
+              <img class="fb-paper" src="./assets/feedback/paper.webp" alt="" loading="lazy" />
+            </div>
 
-    <div id="grid-overlay" aria-hidden="true"></div>
+            <div class="fb-face fb-back">
+              <img class="fb-back-texture" src="./assets/feedback/card-texture.webp" alt="" loading="lazy" />
+              <img class="fb-paper" src="./assets/feedback/paper.webp" alt="" loading="lazy" />
+
+              <div class="fb-message">
+                <label class="fb-sr" for="fb-text">Your feedback</label>
+                <textarea
+                  id="fb-text"
+                  name="message"
+                  maxlength="1500"
+                  spellcheck="true"
+                  placeholder="Hi! I'm writing to give feedback. Thanks for bringing Dungeon Blitz back! By the way, I miss hanging out in Felbridge. :')"
+                ></textarea>
+              </div>
+
+              <img class="fb-divider" src="./assets/feedback/divider.svg" alt="" width="538" height="1" loading="lazy" />
+              <span class="fb-stamp-box" aria-hidden="true"></span>
+
+              <div class="fb-stamp" aria-hidden="true">
+                <img class="fb-stamp-edge" src="./assets/feedback/stamp-edge.svg" alt="" width="119" height="162" loading="lazy" />
+                <div class="fb-stamp-art">
+                  <canvas class="fb-stamp-shader" data-shader="glowing-wave"></canvas>
+                  <div class="fb-stamp-photos">
+                    <img class="fb-stamp-ibrahim" src="./assets/feedback/stamp-ibrahim.png" alt="" loading="lazy" />
+                    <img class="fb-stamp-mica" src="./assets/feedback/stamp-mica.png" alt="" loading="lazy" />
+                    <img class="fb-stamp-logo" src="./assets/feedback/stamp-logo.svg" alt="" width="31" height="34" loading="lazy" />
+                  </div>
+                  <img class="fb-stamp-title" src="./assets/feedback/stamp-title.svg" alt="" width="46" height="14" loading="lazy" />
+                  <div class="fb-stamp-frame"><img src="./assets/feedback/stamp-frame.png" alt="" loading="lazy" /></div>
+                </div>
+                <img class="fb-stamp-value" src="./assets/feedback/stamp-value.svg" alt="" width="96" height="14" loading="lazy" />
+                <img class="fb-stamp-postmark" src="./assets/feedback/postage-due.svg" alt="" width="95" height="97" loading="lazy" />
+              </div>
+              <img class="fb-postmark-text" src="./assets/feedback/postmark.svg" alt="" width="114" height="107" loading="lazy" />
+
+              <img class="fb-address-lines" src="./assets/feedback/address-lines.svg" alt="" width="333" height="139" loading="lazy" />
+              <div class="fb-address">
+                <p class="fb-address-line">
+                  <span class="fb-address-label">To:</span>
+                  <span>The Minesa Studio</span>
+                </p>
+                <p class="fb-address-line">
+                  <label class="fb-address-label" for="fb-from">From:</label>
+                  <input
+                    id="fb-from"
+                    name="from"
+                    type="text"
+                    autocomplete="name"
+                    maxlength="40"
+                    spellcheck="false"
+                    placeholder="your name"
+                  />
+                </p>
+                <span class="fb-address-gap" aria-hidden="true"></span>
+                <a href="mailto:support@theminesa.studio">support@theminesa.studio</a>
+              </div>
+              <p class="fb-meta">
+                <span>THEMINESA.STUDIO/FEEDBACK</span>
+                <span>Made in Worldwide <b>•</b> <b>Delivered worldwide</b></span>
+              </p>
+              <img class="fb-watermark" src="./assets/feedback/watermark.svg" alt="" width="165" height="163" loading="lazy" />
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="fb-cta">
+          <h2 class="fb-title" id="fb-title">
+            <span>Want to</span>
+            <span class="fb-send-slot">
+              <img class="fb-kaeru" src="./assets/feedback/kaeru.png" alt="" width="85" height="114" loading="lazy" />
+              <button class="fb-send" type="submit">send</button>
+            </span>
+            <span class="fb-title-end">the feedback?</span>
+          </h2>
+          <button class="fb-flip" type="button" data-feedback-flip>Turn the card over</button>
+          <p class="fb-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>

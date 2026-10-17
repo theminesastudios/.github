@@ -3,129 +3,247 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dungeon Blitz: R | The Minesa Studios</title>
+    <title>Dungeon Blitz: R | Free-to-play side-scrolling brawler</title>
     <meta
       name="description"
-      content="Dungeon Blitz: R is a free-to-play, side-scrolling brawler with light RPG and MMO elements."
+      content="Dungeon Blitz: R is an open-source fan revival of Dungeon Blitz by The Minesa Studios: a free-to-play, side-scrolling brawler with light RPG and MMO elements. Play in your browser or with the launcher."
     />
+    <link rel="canonical" href="https://theminesa.studio/dungeon-blitz-r.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Minesa Studios" />
+    <meta property="og:title" content="Dungeon Blitz: R" />
+    <meta
+      property="og:description"
+      content="A free-to-play, side-scrolling brawler with light RPG and MMO elements. Play in your browser or with the launcher."
+    />
+    <meta property="og:url" content="https://theminesa.studio/dungeon-blitz-r.html" />
+    <meta property="og:image" content="https://theminesa.studio/assets/dungeon-blitz-r/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#140b08" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@400;700&amp;family=Vollkorn+SC:wght@400;600;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@400;700&amp;family=Roboto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Vollkorn+SC:wght@400;600;700;900&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="dungeon-blitz-r.css" />
+    <link rel="stylesheet" href="dungeon-blitz-r.css?v=10" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="preload" as="image" href="assets/dungeon-blitz-r/main-bg.webp" fetchpriority="high" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Dungeon Blitz: R",
+        "alternateName": "Dungeon Blitz Remake",
+        "url": "https://theminesa.studio/dungeon-blitz-r.html",
+        "image": "https://theminesa.studio/assets/dungeon-blitz-r/og.jpg",
+        "description": "An open-source fan revival of Dungeon Blitz: a free-to-play, side-scrolling brawler with light RPG and MMO elements.",
+        "genre": ["Action RPG", "Side-scrolling brawler", "MMO"],
+        "gamePlatform": ["Web browser", "Windows", "macOS"],
+        "applicationCategory": "Game",
+        "playMode": ["SinglePlayer", "MultiPlayer"],
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": 0, "priceCurrency": "USD" },
+        "characterAttribute": ["Paladin", "Rogue", "Mage"],
+        "author": { "@type": "Organization", "name": "The Minesa Studios", "url": "https://theminesa.studio" },
+        "publisher": { "@type": "Organization", "name": "The Minesa Studios", "url": "https://theminesa.studio" },
+        "sameAs": ["https://github.com/theminesastudios", "https://discord.gg/the-minesa-studios-1295512336353722438"]
+      }
+    </script>
+    <script src="dungeon-blitz-r.js?v=4" defer></script>
   </head>
   <body>
-    <main class="db-page">
-      <section class="db-hero" id="game" aria-label="Dungeon Blitz: R hero">
-        <div class="db-hero__backdrop" aria-hidden="true"></div>
-        <div class="db-hero__vignette" aria-hidden="true"></div>
-        <div class="db-hero__grain" aria-hidden="true"></div>
+    <div class="dbr">
+      <a href="#main" class="dbr-skip">Skip to content</a>
 
-        <header class="db-header">
-          <a class="db-logo" href="#game" aria-label="Dungeon Blitz: R home">
-            <img
-              src="assets/dungeon_blitz_r/Dungeon Blitz_ R logo.svg"
-              alt="Dungeon Blitz R"
-            />
-          </a>
+      <header class="dbr-header">
+        <img src="assets/dungeon-blitz-r/header-bg.png" alt="" class="dbr-header-bg" aria-hidden="true" />
+        <a href="./index.html" class="dbr-logo" aria-label="The Minesa Studios home">
+          <img src="assets/dungeon-blitz-r/minesa-mark.svg" alt="" class="dbr-logo-mark" width="59" height="56" />
+          <img src="assets/dungeon-blitz-r/x.svg" alt="" class="dbr-logo-mark" width="18" height="19" />
+          <img src="assets/dungeon-blitz-r/dbr-logo.svg" alt="" width="74" height="57" />
+        </a>
 
-          <nav class="db-nav" aria-label="Primary">
-            <a class="db-nav__link db-nav__link--active" href="#game">Game</a>
-            <span
-              class="db-nav__link db-nav__link--disabled"
-              aria-disabled="true"
-              >Disciplines
-              <small>Unavailable</small></span
-            >
-            <span
-              class="db-nav__link db-nav__link--disabled"
-              aria-disabled="true"
-              >Team
-              <small>Unavailable</small></span
-            >
-          </nav>
+        <nav class="dbr-nav" aria-label="Primary">
+          <ul>
+            <li>
+              <a href="#game" class="dbr-nav-item is-active" data-section="game" aria-current="location">
+                <img src="assets/dungeon-blitz-r/nav-active.svg" alt="" class="dbr-nav-bg" aria-hidden="true" width="129" height="89" />
+                <span>Game</span>
+              </a>
+            </li>
+            <li>
+              <a href="#disciplines" class="dbr-nav-item" data-section="disciplines">
+                <img src="assets/dungeon-blitz-r/nav-active.svg" alt="" class="dbr-nav-bg" aria-hidden="true" width="129" height="89" />
+                <span>Disciplines</span>
+              </a>
+            </li>
+            <li>
+              <span class="dbr-nav-item is-soon" aria-disabled="true" title="Coming soon">
+                <span>Ranks</span><span class="dbr-sr-only"> (coming soon)</span>
+              </span>
+            </li>
+            <li>
+              <span class="dbr-nav-item is-soon" aria-disabled="true" title="Coming soon">
+                <span>Gears</span><span class="dbr-sr-only"> (coming soon)</span>
+              </span>
+            </li>
+          </ul>
+        </nav>
 
-          <a
-            class="db-launch db-launch--ready"
-            href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
-            data-launcher-download
-          >
-            Download Launcher
-            <small>Early Access</small>
-          </a>
-        </header>
+        <a href="https://dungeonblitzr.theminesa.studio/web" class="dbr-launch" target="_blank" rel="noopener">
+          Play Now<span class="dbr-sr-only"> in your browser (opens in a new tab)</span>
+        </a>
+      </header>
 
-        <div class="db-hero__content">
-          <div class="db-copy">
-            <img
-              class="db-copy__ornament"
-              src="assets/dungeon_blitz_r/Icon Row.svg"
-              alt=""
-            />
-            <h1>Dungeon Blitz R</h1>
-            <img
-              class="db-copy__ornament"
-              src="assets/dungeon_blitz_r/Icon Row.svg"
-              alt=""
-            />
-            <p class="db-copy__lead">
-              A free-to-play, side-scrolling brawler with light RPG and MMO
-              game!
-            </p>
-            <p class="db-copy__status">Early Access</p>
+      <main id="main" tabindex="-1">
+        <section id="game" class="dbr-main" aria-labelledby="dbr-title">
+          <div class="dbr-parallax dbr-main-bg-wrap" aria-hidden="true">
+            <img src="assets/dungeon-blitz-r/main-bg.webp" alt="" class="dbr-main-bg" width="2560" height="1186" fetchpriority="high" />
+          </div>
+          <div class="dbr-main-shade" aria-hidden="true"></div>
 
-            <div class="db-download" id="download">
+          <div class="dbr-sky" aria-hidden="true">
+            <img src="assets/dungeon-blitz-r/scenery/mist-cloud-1.svg" alt="" class="dbr-parallax dbr-cloud dbr-cloud-a" width="240" height="109" />
+            <img src="assets/dungeon-blitz-r/scenery/mist-cloud-2.svg" alt="" class="dbr-parallax dbr-cloud dbr-cloud-b" width="187" height="111" />
+            <img src="assets/dungeon-blitz-r/scenery/mist-cloud-3.svg" alt="" class="dbr-parallax dbr-cloud dbr-cloud-c" width="110" height="63" />
+            <img src="assets/dungeon-blitz-r/scenery/mist-cloud-1.svg" alt="" class="dbr-parallax dbr-cloud dbr-cloud-d" width="240" height="109" />
+          </div>
+
+          <div class="dbr-main-content">
+            <div class="dbr-main-heading">
+              <div class="dbr-ornament" aria-hidden="true">
+                <img src="assets/dungeon-blitz-r/divider-left.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-25.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/divider-right.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+              </div>
+              <h1 id="dbr-title" class="dbr-main-title">Dungeon Blitz: R</h1>
+              <div class="dbr-ornament" aria-hidden="true">
+                <img src="assets/dungeon-blitz-r/divider-left.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-25.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/divider-right.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+              </div>
+            </div>
+            <p class="dbr-main-tagline">A free-to-play, side-scrolling brawler with light RPG and MMO elements.</p>
+
+            <div class="dbr-main-status">
+              <p class="dbr-main-soon">Early Access</p>
+              <p class="dbr-main-release">Public release on <time datetime="2026-10-30">October 30</time></p>
+            </div>
+
+            <div class="dbr-play" id="play">
+              <a class="dbr-play-btn is-primary" href="https://dungeonblitzr.theminesa.studio/web" target="_blank" rel="noopener">
+                Play in browser
+                <small>No download needed<span class="dbr-sr-only"> (opens in a new tab)</span></small>
+              </a>
               <a
-                class="db-download__button"
+                class="dbr-play-btn"
                 href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
                 data-launcher-download
               >
-                <span data-launcher-label>Download the Launcher</span>
+                <span data-launcher-label>Download the launcher</span>
+                <small data-launcher-meta>Windows and macOS</small>
               </a>
-              <p class="db-download__meta" data-launcher-meta>
-                Available for Windows and macOS
-              </p>
-              <p class="db-download__release">
-                Public release on
-                <time datetime="2026-10-30">October 30</time>
-              </p>
-              <p class="db-download__other" data-launcher-other>
-                Other downloads:
-                <a
-                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
-                  data-launcher-asset="win-x64"
-                  >Windows 64-bit</a
-                >
-                &middot;
-                <a
-                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
-                  data-launcher-asset="win-ia32"
-                  >Windows 32-bit</a
-                >
-                &middot;
-                <a
-                  href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest"
-                  data-launcher-asset="mac"
-                  >macOS</a
-                >
-              </p>
             </div>
+            <p class="dbr-play-other" data-launcher-other>
+              Other downloads:
+              <a href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest" data-launcher-asset="win-x64">Windows 64-bit</a>
+              &middot;
+              <a href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest" data-launcher-asset="win-ia32">Windows 32-bit</a>
+              &middot;
+              <a href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest" data-launcher-asset="mac">macOS</a>
+            </p>
           </div>
+
+          <p class="dbr-credit">
+            <img src="assets/dungeon-blitz-r/rocking.svg" alt="" class="dbr-credit-rock" width="23" height="30" />
+            <span class="dbr-credit-text">
+              <span>remake by</span>
+              <strong>The Minesa Studios</strong>
+            </span>
+            <img src="assets/dungeon-blitz-r/eye.svg" alt="" class="dbr-credit-eye" width="51" height="26" />
+          </p>
+        </section>
+
+        <section id="disciplines" class="dbr-classes" aria-labelledby="dbr-classes-title">
+          <div class="dbr-classes-heading">
+            <h2 id="dbr-classes-title" class="dbr-section-title">Classes &amp; Disciplines</h2>
+            <div class="dbr-ornament" aria-hidden="true">
+                <img src="assets/dungeon-blitz-r/divider-left.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-25.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/tl-5.png" alt="" class="dbr-ornament-star" width="50" height="50" />
+                <img src="assets/dungeon-blitz-r/divider-right.svg" alt="" class="dbr-ornament-line" width="265" height="6" />
+              </div>
+            <p class="dbr-classes-intro">Three classes, three disciplines each. Pick one to see who you become.</p>
+          </div>
+
+          <!-- Built by dungeon-blitz-r.js from its class data. -->
+          <div class="dbr-classes-stage" data-class-showcase></div>
+        </section>
+      </main>
+
+      <footer class="dbr-footer">
+        <div class="dbr-footer-scenery" aria-hidden="true">
+          <img src="assets/dungeon-blitz-r/scenery/dark-cloud-2.svg" alt="" class="dbr-parallax dbr-footer-cloud dbr-footer-cloud-back" width="659" height="185" />
+          <img src="assets/dungeon-blitz-r/scenery/dark-cloud-3.svg" alt="" class="dbr-parallax dbr-footer-cloud dbr-footer-cloud-mid" width="729" height="143" />
+          <img src="assets/dungeon-blitz-r/scenery/dark-cloud-1.svg" alt="" class="dbr-parallax dbr-footer-cloud dbr-footer-cloud-front" width="880" height="198" />
         </div>
 
-        <div class="db-credit">
-          <div class="db-credit__icons">
-            <img src="assets/dungeon_blitz_r/rocking.svg" alt="" />
-            <img src="assets/dungeon_blitz_r/eye.svg" alt="" />
+        <div class="dbr-footer-inner">
+          <div class="dbr-footer-brand">
+            <a href="./index.html" class="dbr-logo" aria-label="The Minesa Studios home">
+              <img src="assets/dungeon-blitz-r/minesa-mark.svg" alt="" class="dbr-logo-mark" width="59" height="56" />
+              <img src="assets/dungeon-blitz-r/x.svg" alt="" class="dbr-logo-mark" width="18" height="19" />
+              <img src="assets/dungeon-blitz-r/dbr-logo.svg" alt="" width="74" height="57" />
+            </a>
+            <p>An open-source fan revival of Dungeon Blitz, rebuilt by The Minesa Studios with multiplayer, fixes and balancing.</p>
           </div>
-          <p>Remake by</p>
-          <strong>The Minesa Studios</strong>
+
+          <nav class="dbr-footer-links" aria-label="Footer">
+            <div>
+              <h2 class="dbr-footer-heading">Play</h2>
+              <ul>
+                <li>
+                  <a href="https://dungeonblitzr.theminesa.studio/web" target="_blank" rel="noopener">In your browser<span class="dbr-sr-only"> (opens in a new tab)</span></a>
+                </li>
+                <li>
+                  <a href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases/latest" data-launcher-download>Launcher</a>
+                </li>
+                <li><a href="#disciplines">Classes &amp; disciplines</a></li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="dbr-footer-heading">Community</h2>
+              <ul>
+                <li>
+                  <a href="https://discord.gg/the-minesa-studios-1295512336353722438" target="_blank" rel="noopener">Discord<span class="dbr-sr-only"> (opens in a new tab)</span></a>
+                </li>
+                <li>
+                  <a href="https://github.com/theminesastudios" target="_blank" rel="noopener">GitHub<span class="dbr-sr-only"> (opens in a new tab)</span></a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="dbr-footer-heading">Studio</h2>
+              <ul>
+                <li><a href="./index.html">The Minesa Studios</a></li>
+                <li><a href="./team.html">Team</a></li>
+                <li><a href="./updates.html">Updates</a></li>
+              </ul>
+            </div>
+          </nav>
         </div>
-      </section>
-    </main>
-    <script src="dungeon-blitz-r.js" defer></script>
+
+        <div class="dbr-footer-bottom">
+          <span>© 2026 The Minesa Studios</span>
+          <span>Made in Worldwide</span>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

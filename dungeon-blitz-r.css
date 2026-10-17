@@ -1,543 +1,1431 @@
-@import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@400;700&family=Vollkorn+SC:wght@400;600;700&display=swap");
-
-:root {
-  --bg: #070707;
-  --text: #f8f2ea;
-  --muted: rgba(248, 242, 234, 0.6);
-  --accent: #c77b57;
-  --accent-border: rgba(240, 188, 96, 0.58);
-  --danger: #ff1717;
-  --font-display: "Averia Serif Libre", serif;
-  --font-ui: "Vollkorn SC", serif;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
+/* Dungeon Blitz: R (Figma: Websites > Main + Classes & Disciplines), ported from minesa-v6.
+   Fonts come from Google Fonts in dungeon-blitz-r.html. */
+.dbr {
+  --font-vollkorn: "Vollkorn SC";
+  --font-averia: "Averia Serif Libre";
+  --font-roboto-serif: "Roboto Serif";
 }
 
 body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-ui);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  margin: 0;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
+.dbr {
+  --dbr-gold: #eac06b;
+  --dbr-red: #ff4949;
+  --dbr-maroon: #a84b4b;
+  /* Maroon lifted for text on the brown stage: 4.9:1 on #3b2820. */
+  --dbr-rose: #f08a7b;
+  --dbr-cream: #ffe0a2;
+  --dbr-sand: #e0cda7;
+  --dbr-night: #140b08;
+  --dbr-header-h: 89px;
+  /* Spring approximations (no overshoot / light overshoot). */
+  --dbr-spring: linear(0, 0.157, 0.438, 0.66, 0.808, 0.897, 0.948, 0.976, 0.99, 0.997, 1);
+  --dbr-spring-snappy: linear(0, 0.204, 0.624, 0.96, 1.08, 1.06, 1.02, 1);
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.db-page {
-  overflow: clip;
-}
-
-.db-hero {
   position: relative;
   min-height: 100vh;
-  padding-inline: 2rem;
-  padding-block: 0;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  overflow-x: clip;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-vollkorn), serif;
 }
 
-.db-hero__backdrop,
-.db-hero__vignette,
-.db-hero__grain {
+:root:has(.dbr) {
+  background: var(--dbr-night, #140b08);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:has(.dbr) {
+    scroll-behavior: smooth;
+  }
+}
+
+.dbr img {
+  display: block;
+  max-width: none;
+}
+
+.dbr button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dbr a {
+  color: inherit;
+}
+
+.dbr :focus-visible {
+  outline: 2px solid var(--dbr-gold);
+  outline-offset: 3px;
+}
+
+.dbr ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dbr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.dbr-skip {
+  position: fixed;
+  z-index: 100;
+  top: 12px;
+  left: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--dbr-gold);
+  border-radius: 3px;
+  background: var(--dbr-maroon);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  translate: 0 -200%;
+}
+
+.dbr-skip:focus-visible {
+  translate: 0 0;
+}
+
+.dbr main:focus {
+  outline: none;
+}
+
+.dbr section {
+  scroll-margin-top: var(--dbr-header-h);
+}
+
+/* ---------- Parallax (CSS scroll-driven; static where unsupported or reduced motion) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .dbr-parallax {
+      animation: dbr-parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+
+    .dbr-footer .dbr-parallax {
+      animation-name: dbr-rise;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    .dbr-header::before {
+      animation: dbr-header-solid linear both;
+      animation-timeline: scroll(root);
+      animation-range: 40vh 80vh;
+    }
+
+    .dbr-header .dbr-logo-mark {
+      animation: dbr-mark-light linear both;
+      animation-timeline: scroll(root);
+      animation-range: 40vh 80vh;
+    }
+  }
+}
+
+/* The Minesa mark is black ink; over dark ground it is drawn light. */
+.dbr-header .dbr-logo-mark,
+.dbr-footer .dbr-logo-mark {
+  filter: invert(0.93);
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .dbr-header .dbr-logo-mark {
+      filter: none;
+    }
+  }
+}
+
+@keyframes dbr-mark-light {
+  to {
+    filter: invert(0.93);
+  }
+}
+
+@keyframes dbr-parallax {
+  to {
+    translate: 0 var(--dbr-shift, 0px);
+  }
+}
+
+@keyframes dbr-rise {
+  from {
+    translate: 0 var(--dbr-shift, 0px);
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes dbr-header-solid {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Header ---------- */
+.dbr-header {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--dbr-header-h);
+  padding: 0 33px;
+}
+
+/* Solid backdrop that fades in once the hero scrolls away (always on without scroll timelines). */
+.dbr-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 11, 8, 0.92);
+  border-bottom: 1px solid rgba(234, 192, 107, 0.25);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .dbr-header::before {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbr-header::before {
+    opacity: 1;
+  }
+}
+
+.dbr-header-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.dbr-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: start;
+  border-radius: 4px;
+}
+
+.dbr-nav {
+  position: relative;
+  height: var(--dbr-header-h);
+}
+
+.dbr-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  height: 100%;
+}
+
+.dbr-nav li {
+  height: 100%;
+}
+
+.dbr-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* The banner is 129px wide in the design; centring it keeps the design's spacing between items. */
+.dbr-nav-bg {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 64.5px);
+  width: 129px;
+  height: 100%;
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.25s var(--dbr-spring), transform 0.35s var(--dbr-spring);
+}
+
+.dbr-nav-item.is-active .dbr-nav-bg {
+  opacity: 1;
+  transform: none;
+}
+
+.dbr-nav-item span {
+  position: relative;
+}
+
+.dbr-nav-item:not(.is-soon):hover span {
+  color: var(--dbr-cream);
+}
+
+.dbr-nav-item.is-soon {
+  color: rgba(255, 255, 255, 0.6);
+  cursor: default;
+}
+
+.dbr-launch {
+  position: relative;
+  justify-self: end;
+  padding: 10px;
+  border: 1px solid var(--dbr-gold);
+  border-radius: 3px;
+  background: var(--dbr-maroon);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 11px;
+  letter-spacing: -0.48px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, transform 0.15s var(--dbr-spring);
+}
+
+.dbr-launch:hover {
+  background: #bd5656;
+}
+
+.dbr-launch:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Hero ---------- */
+.dbr-main {
+  position: relative;
+  min-height: max(100vh, 720px);
+  overflow: hidden;
+}
+
+/* Taller than the hero so the art has room to travel. */
+.dbr-main-bg-wrap {
+  --dbr-shift: 18vh;
+  position: absolute;
+  inset: 0 0 -20vh;
+}
+
+.dbr-main-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 20% top;
+  opacity: 0.9;
+}
+
+/* Figma: gradient starts at x=497/1978 and is fully black at 59.6% of the rest. */
+.dbr-main-shade {
+  position: absolute;
+  inset: 0 0 0 25.1%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 59.615%);
+}
+
+.dbr-sky {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.db-hero__backdrop {
-  z-index: -3;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.72) 51%, rgba(0, 0, 0, 0.96) 75%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.12) 22%, rgba(0, 0, 0, 0.78) 100%),
-    url("assets/dungeon_blitz_r/background.webp") center center / cover no-repeat;
-}
-
-.db-hero__vignette {
-  z-index: -2;
-  box-shadow:
-    inset 0 0 160px rgba(0, 0, 0, 0.8),
-    inset 0 -80px 160px rgba(0, 0, 0, 0.82);
-}
-
-.db-hero__grain {
-  z-index: -1;
-  opacity: 0.15;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.24) 0 1px, transparent 1px),
-    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px);
-  background-size: 11px 11px, 13px 13px;
-  mix-blend-mode: soft-light;
-}
-
-.db-header {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: start;
-  gap: 1.5rem;
-  padding-top: 1.25rem;
-}
-
-.db-logo img {
-  width: clamp(4rem, 7vw, 5.4rem);
-}
-
-.db-nav {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  gap: clamp(1rem, 3vw, 2.75rem);
-  padding-top: 0.25rem;
-  row-gap: 0.8rem;
-}
-
-.db-nav__link {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.95rem 0.2rem;
-  font-size: clamp(0.82rem, 1.35vw, 0.98rem);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: rgba(255, 248, 238, 0.94);
-}
-
-.db-nav__link small {
-  font-size: 0.55rem;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-}
-
-.db-nav__link--active {
-  position: relative;
-  padding: 1.15rem 2.35rem 1.75rem;
-}
-
-.db-nav__link--active::before {
-  content: "";
+.dbr-cloud {
   position: absolute;
-  top: -1.1rem;
-  left: -0.95rem;
-  right: -0.95rem;
-  bottom: -0.55rem;
-  background: top center / 100% 100% no-repeat
-    url("assets/dungeon_blitz_r/Active_Nav_Background.svg");
-  z-index: -1;
-  pointer-events: none;
+  height: auto;
+  opacity: 0.85;
 }
 
-.db-nav__link--disabled {
-  opacity: 0.72;
-  cursor: not-allowed;
-}
+/* Far clouds move least, near clouds most. */
+.dbr-cloud-a { --dbr-shift: -14vh; left: 4%; top: 17%; width: clamp(140px, 15vw, 240px); }
+.dbr-cloud-b { --dbr-shift: -26vh; left: 27%; top: 9%; width: clamp(110px, 11vw, 187px); }
+.dbr-cloud-c { --dbr-shift: -8vh; left: 46%; top: 24%; width: clamp(70px, 6vw, 110px); opacity: 0.6; }
+.dbr-cloud-d { --dbr-shift: -36vh; left: -3%; top: 52%; width: clamp(180px, 20vw, 320px); opacity: 0.55; transform: scaleX(-1); }
 
-.db-launch {
-  align-self: start;
-  min-height: 3.2rem;
-  border: 1px solid rgba(180, 180, 180, 0.24);
-  background: linear-gradient(180deg, rgba(119, 119, 119, 0.28) 0%, rgba(65, 65, 65, 0.22) 100%);
-  color: rgba(255, 255, 255, 0.52);
-  padding: 0.52rem 1.04rem;
-  border-radius: 0.3rem;
-  font: inherit;
-  font-size: clamp(0.84rem, 1.35vw, 0.96rem);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
-  cursor: not-allowed;
-}
-
-.db-launch--ready {
-  display: inline-flex;
+.dbr-main-content {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: max(26px, calc((100% - 762px) * 0.04));
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.15rem;
-  border-color: var(--accent-border);
-  background: linear-gradient(180deg, rgba(199, 123, 87, 0.92) 0%, rgba(122, 62, 36, 0.92) 100%);
-  color: var(--text);
-  cursor: pointer;
-  transition: filter 160ms ease, transform 160ms ease;
+  gap: 64px;
+  width: min(762px, calc(100% - 32px));
+  transform: translateY(-50%);
 }
 
-.db-launch--ready small {
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  color: rgba(255, 238, 214, 0.82);
-}
-
-.db-launch--ready:hover,
-.db-launch--ready:focus-visible {
-  filter: brightness(1.12);
-  transform: translateY(-1px);
-}
-
-.db-launch--ready:focus-visible,
-.db-download__button:focus-visible,
-.db-download__other a:focus-visible {
-  outline: 2px solid var(--accent-border);
-  outline-offset: 3px;
-}
-
-.db-download {
-  display: grid;
-  justify-items: center;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
-}
-
-.db-download__button {
-  display: inline-flex;
+.dbr-main-heading {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 3.6rem;
-  padding: 0.8rem 2.2rem;
-  border: 1px solid var(--accent-border);
-  border-radius: 0.3rem;
-  background: linear-gradient(180deg, rgba(199, 123, 87, 0.95) 0%, rgba(122, 62, 36, 0.95) 100%);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
-  font-size: clamp(1rem, 1.8vw, 1.25rem);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: filter 160ms ease, transform 160ms ease;
+  width: 100%;
 }
 
-.db-download__button:hover,
-.db-download__button:focus-visible {
-  filter: brightness(1.12);
-  transform: translateY(-1px);
-}
-
-.db-download__meta,
-.db-download__release,
-.db-download__other {
-  font-size: clamp(0.78rem, 1.2vw, 0.92rem);
-  letter-spacing: 0.06em;
-  line-height: 1.5;
-}
-
-.db-download__meta {
-  max-width: 44ch;
-  color: var(--muted);
-}
-
-.db-download__release {
-  text-transform: uppercase;
-}
-
-.db-download__release time {
-  color: var(--accent);
+.dbr-main-title {
+  margin: 0;
+  font-family: var(--font-averia), serif;
+  font-size: clamp(48px, 6.7vw, 96px);
   font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+  color: #fff;
 }
 
-.db-download__other {
-  color: var(--muted);
+.dbr-main-tagline {
+  margin: 16px 0 0;
+  font-size: clamp(20px, 2.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: 0.96px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #eee;
 }
 
-.db-download__other a {
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-color: var(--accent-border);
-  text-underline-offset: 0.2em;
+.dbr-main-soon {
+  margin: 0;
+  font-family: var(--font-averia), serif;
+  font-size: clamp(32px, 3.3vw, 48px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: red;
   white-space: nowrap;
 }
 
-.db-launch--ready.is-disabled,
-.db-download__button.is-disabled {
-  border-color: rgba(180, 180, 180, 0.24);
-  background: linear-gradient(180deg, rgba(119, 119, 119, 0.28) 0%, rgba(65, 65, 65, 0.22) 100%);
-  color: rgba(255, 255, 255, 0.52);
-  cursor: not-allowed;
-  filter: none;
+.dbr-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+}
+
+.dbr-ornament-line {
+  width: 34.8%;
+  height: 6px;
+}
+
+.dbr-ornament-star {
+  width: 50px;
+  height: 50px;
+  transform: scaleY(-1);
+}
+
+.dbr-credit {
+  position: absolute;
+  z-index: 1;
+  right: 40px;
+  bottom: 23px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin: 0;
+}
+
+.dbr-credit-rock {
+  width: 23px;
+  height: 30px;
+}
+
+.dbr-credit-eye {
+  width: 51px;
+  height: 26px;
+  align-self: flex-start;
+  margin-top: -16px;
+}
+
+.dbr-credit-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.dbr-credit-text span {
+  font-family: var(--font-averia), serif;
+  font-size: 11px;
+}
+
+.dbr-credit-text strong {
+  font-family: var(--font-vollkorn), serif;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.48px;
+}
+
+/* ---------- Classes & Disciplines ---------- */
+/* The section glows in the selected discipline's accent (set by dungeon-blitz-r.js); the
+   registered property lets the colour cross-fade. */
+@property --dbr-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e0832b;
+}
+
+.dbr-classes {
+  position: relative;
+  z-index: 1;
+  padding: 72px 0 0;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 52%, color-mix(in srgb, var(--dbr-accent) 34%, #1f140e) 0%, transparent 72%),
+    linear-gradient(to bottom, #2a1a12, #140b08);
+  text-align: center;
+  transition: --dbr-accent 0.7s ease;
+}
+
+
+.dbr-classes-heading {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(762px, calc(100% - 32px));
+  margin: 0 auto 50px;
+}
+
+.dbr-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 -20px;
+  font-family: var(--font-vollkorn), serif;
+  font-size: clamp(36px, 4.4vw, 64px);
+  font-weight: 700;
+  letter-spacing: -1.92px;
+  white-space: nowrap;
+  color: #fff;
+}
+
+
+
+.dbr-classes-intro {
+  margin: 8px 0 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--dbr-sand);
+}
+
+.dbr-classes-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 472px 1fr;
+  align-items: center;
+  gap: 40px;
+  min-height: 616px;
+  padding: 52px 111px 250px;
+  overflow: hidden;
+}
+
+
+.dbr-class-picker {
+  position: relative;
+  justify-self: start;
+  width: 189px;
+  height: 540px;
+}
+
+.dbr-class-thumb {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  box-sizing: border-box;
+  border: 1px solid rgba(234, 192, 107, 0.6) !important;
+  border-radius: 25px;
+  outline: 5px dashed transparent;
+  outline-offset: 3px;
+  transition: border-width 0.25s var(--dbr-spring), outline-color 0.25s ease, transform 0.25s var(--dbr-spring-snappy);
+}
+
+.dbr-class-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.dbr-class-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 20px 10px #000;
+  pointer-events: none;
+}
+
+.dbr-class-thumb:hover {
+  transform: scale(1.05);
+}
+
+.dbr-class-thumb:active {
+  transform: scale(0.97);
+}
+
+.dbr-class-thumb:focus-visible {
+  outline: 3px solid var(--dbr-gold);
+}
+
+.dbr-class-thumb.is-selected {
+  border-width: 9px !important;
+  outline-color: rgba(234, 192, 107, 0.3);
   transform: none;
 }
 
-.db-launch--ready.is-disabled small {
-  color: rgba(255, 255, 255, 0.42);
+.dbr-class-thumb.is-selected:focus-visible {
+  outline: 3px solid var(--dbr-gold);
 }
 
-.db-hero__content {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-block: clamp(1.5rem, 4vh, 3rem);
-}
-
-.db-copy {
-  width: min(48rem, 100%);
-  text-align: center;
-  margin-right: clamp(0rem, 3vw, 2rem);
-}
-
-.db-copy__ornament {
-  width: min(100%, 48rem);
-  margin-inline: auto;
-}
-
-.db-copy h1 {
-  margin: 1rem 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6vw, 5.4rem);
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-  text-wrap: balance;
-  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
-}
-
-.db-copy__lead {
-  margin: 2rem auto 0;
-  max-width: 40ch;
-  font-size: clamp(0.98rem, 2vw, 1.55rem);
-  line-height: 1.45;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.db-copy__status {
-  margin-top: 3rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.5vw, 3.2rem);
-  color: var(--danger);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.db-credit {
+.dbr-class-label {
   position: absolute;
-  right: 2rem;
-  bottom: 1.6rem;
-  display: grid;
-  justify-items: end;
-  gap: 0.15rem;
-  text-transform: uppercase;
-  z-index: 1;
-}
-
-.db-credit__icons {
-  display: flex;
-  gap: 0.8rem;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 0.35rem;
-}
-
-.db-credit__icons img:first-child {
-  width: 1.5rem;
-}
-
-.db-credit__icons img:last-child {
-  width: 2.2rem;
-}
-
-.db-credit p,
-.db-credit strong {
-  line-height: 1;
-}
-
-.db-credit p {
-  font-size: 0.58rem;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.1em;
-}
-
-.db-credit strong {
-  font-size: 1rem;
+  top: calc(100% + 10px);
+  left: 50%;
+  translate: -50% 0;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--dbr-sand);
+  white-space: nowrap;
 }
 
-@media (max-width: 1100px) {
-  .db-header {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .db-nav,
-  .db-launch {
-    display: none;
-  }
-
-  .db-nav {
-    flex-wrap: wrap;
-  }
-
-  .db-launch {
-    justify-self: center;
-  }
-
-  .db-hero__content {
-    justify-content: center;
-    min-height: 58vh;
-  }
-
-  .db-copy {
-    margin-right: 0;
-  }
-
-  .db-copy__ornament {
-    width: min(100%, 40rem);
-  }
+.dbr-class-thumb.is-selected .dbr-class-label {
+  top: calc(100% + 14px);
+  color: var(--dbr-cream);
 }
 
-@media (max-width: 760px) {
-  .db-hero {
-    min-height: 100svh;
-    padding-inline: 1rem;
-    padding-block: 0;
-  }
+.dbr-class-slot-0 { left: 60px; top: 8px; }
+.dbr-class-slot-1 { left: 0; top: 204px; }
+.dbr-class-slot-2 { left: 60px; top: 400px; }
 
-  .db-hero__backdrop {
-    background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.64) 0%, rgba(0, 0, 0, 0.38) 18%, rgba(0, 0, 0, 0.86) 100%),
-      linear-gradient(0deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      url("assets/dungeon_blitz_r/background.webp") 28% center / cover no-repeat;
-  }
-
-  .db-nav {
-    width: 100%;
-    justify-content: center;
-    gap: 0.65rem;
-  }
-
-  .db-nav__link {
-    min-width: 7.5rem;
-    font-size: 0.86rem;
-    line-height: 1.1;
-  }
-
-  .db-nav__link--active {
-    padding: 1.05rem 1.55rem 1.55rem;
-  }
-
-  .db-nav__link--active::before {
-    top: -1rem;
-    left: -0.85rem;
-    right: -0.85rem;
-    bottom: -0.5rem;
-  }
-
-  .db-launch {
-    width: min(100%, 16rem);
-    padding: 0.46rem 0.92rem;
-    font-size: 0.86rem;
-  }
-
-  .db-hero__content {
-    min-height: auto;
-    flex: 1;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-
-  .db-copy {
-    width: 100%;
-  }
-
-  .db-copy__ornament {
-    width: min(100%, 24rem);
-  }
-
-  .db-copy__lead {
-    margin-top: 1.4rem;
-    max-width: 26ch;
-    font-size: clamp(0.95rem, 4.4vw, 1.2rem);
-    line-height: 1.5;
-  }
-
-  .db-copy__status {
-    margin-top: 1.8rem;
-    font-size: clamp(1.7rem, 7.2vw, 2.4rem);
-  }
-
-  .db-download {
-    margin-top: 1.25rem;
-    padding-bottom: 5rem;
-  }
-
-  .db-download__button {
-    width: min(100%, 20rem);
-    padding-inline: 1.2rem;
-  }
-
-  .db-credit {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    justify-items: center;
-    text-align: center;
-  }
-
-  .db-credit strong {
-    font-size: 0.88rem;
-  }
+.dbr-class-showcase {
+  position: relative;
 }
 
-@media (max-width: 480px) {
-  .db-header {
-    gap: 1rem;
-  }
+/* Signature: the portrait swaps like a discipline change in-game, a quick settle without bounce. */
+.dbr-class-hero {
+  width: 472px;
+  height: 472px;
+  object-fit: cover;
+  border-radius: 50%;
+  animation: dbr-hero-in 0.35s var(--dbr-spring);
+}
 
-  .db-nav {
-    gap: 0.5rem;
-  }
-
-  .db-nav__link {
-    min-width: 6.9rem;
-    font-size: 0.78rem;
-  }
-
-  .db-nav__link small {
-    font-size: 0.5rem;
-  }
-
-  .db-nav__link--active {
-    padding: 0.95rem 1.2rem 1.4rem;
-  }
-
-  .db-nav__link--active::before {
-    top: -0.95rem;
-    left: -0.75rem;
-    right: -0.75rem;
-    bottom: -0.45rem;
-  }
-
-  .db-copy h1 {
-    font-size: clamp(2.15rem, 12vw, 3.2rem);
-  }
-
-  .db-copy__ornament {
-    width: min(100%, 18rem);
+@keyframes dbr-hero-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) rotate(-4deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  .dbr-class-hero {
+    animation: dbr-fade 0.2s linear;
   }
 
-  .db-launch--ready,
-  .db-download__button {
+  @keyframes dbr-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .dbr * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.dbr-class-info {
+  position: relative;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 270px;
+  color: var(--dbr-cream);
+}
+
+.dbr-class-abilities {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dbr-ability {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--dbr-sand);
+  white-space: nowrap;
+}
+
+.dbr-ability img {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+}
+
+.dbr-ability img.is-ringed {
+  border: 1px solid var(--dbr-gold);
+  border-radius: 33px;
+  box-sizing: border-box;
+}
+
+.dbr-ability-sep {
+  width: 1px;
+  height: 8px;
+  background: var(--dbr-sand);
+}
+
+.dbr-class-name {
+  margin: 12px 0 4px;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 48px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1.44px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--dbr-cream);
+}
+
+.dbr-class-name.is-long {
+  font-size: 28px;
+  letter-spacing: -0.84px;
+  line-height: 1.97;
+}
+
+.dbr-class-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 106px;
+  height: 27px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--dbr-rose);
+  border-radius: 48px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: lowercase;
+  color: var(--dbr-rose);
+}
+
+.dbr-class-desc {
+  width: 260px;
+  margin: 10px 0 32px;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.1px;
+  text-align: center;
+  color: var(--dbr-cream);
+}
+
+.dbr-disciplines {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 270px;
+  height: 91px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  background: #6d6320;
+}
+
+.dbr-disciplines-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  mix-blend-mode: color-dodge;
+}
+
+.dbr-discipline {
+  position: relative;
+  width: 75px;
+  height: 75px;
+  border-radius: 50px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: transform 0.25s var(--dbr-spring-snappy), filter 0.2s ease;
+}
+
+.dbr-discipline:not(.is-selected) {
+  filter: saturate(0.75) brightness(0.85);
+}
+
+.dbr-discipline:hover {
+  transform: scale(1.06);
+  filter: none;
+}
+
+.dbr-discipline:active {
+  transform: scale(0.97);
+}
+
+.dbr-discipline img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dbr-discipline.is-selected {
+  border: 5px solid var(--dbr-gold) !important;
+}
+
+/* ---------- Footer ---------- */
+.dbr-footer {
+  position: relative;
+  z-index: 2;
+  margin-top: -230px;
+  background: linear-gradient(to bottom, transparent 0, transparent 229px, var(--dbr-night) 229px);
+  color: var(--dbr-sand);
+}
+
+/* Layered silhouettes from the game's own parallax art, darker toward the front. */
+.dbr-footer-scenery {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* EB_Cloud*Base art hangs from the sky in-game; flipped, its bumpy edge becomes a skyline. */
+.dbr-footer-scenery img {
+  position: absolute;
+  bottom: -1px;
+  height: auto;
+  transform: scaleY(-1);
+}
+
+.dbr-footer-cloud-back { --dbr-shift: 50px; left: -4%; width: max(56%, 560px); bottom: 34px !important; }
+.dbr-footer-cloud-mid { --dbr-shift: 80px; right: -6%; width: max(62%, 620px); bottom: 14px !important; }
+.dbr-footer-cloud-front { --dbr-shift: 110px; left: 18%; width: max(80%, 800px); }
+
+.dbr-footer-scenery::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 40px;
+  background: var(--dbr-night);
+}
+
+.dbr-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 40px 56px;
+}
+
+.dbr-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 360px;
+}
+
+.dbr-footer-brand p {
+  margin: 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dbr-sand);
+}
+
+.dbr-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 72px;
+}
+
+.dbr-footer-heading {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.dbr-footer-links li + li {
+  margin-top: 6px;
+}
+
+.dbr-footer-links a {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #c9b9a4;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.dbr-footer-links a:hover {
+  color: var(--dbr-cream);
+  text-decoration: underline;
+}
+
+.dbr-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px 32px;
+  border-top: 1px solid rgba(234, 192, 107, 0.2);
+  font-size: 14px;
+  color: #a8978a;
+}
+
+/* ---------- Tablet / mobile ---------- */
+@media (max-width: 1100px) {
+  .dbr-classes-stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 40px 16px 250px;
+  }
+
+  .dbr-class-picker {
+    justify-self: center;
+    display: flex;
+    gap: 28px;
+    width: auto;
+    height: auto;
+    padding-bottom: 36px;
+  }
+
+  .dbr-class-thumb {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 96px;
+    height: 96px;
+  }
+
+  .dbr-class-hero {
+    width: min(472px, calc(100vw - 32px));
+    height: auto;
+  }
+
+  .dbr-class-info {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .dbr {
+    --dbr-header-h: 128px;
+  }
+
+  .dbr-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    gap: 8px 16px;
+    padding: 12px 16px 0;
+  }
+
+  .dbr-nav {
+    order: 3;
+    width: 100%;
+    height: 52px;
+    overflow-x: auto;
+  }
+
+  .dbr-nav ul {
+    gap: 28px;
+  }
+
+  .dbr-nav-item {
+    font-size: 14px;
+  }
+
+  .dbr-nav-bg {
+    width: 110px;
+  }
+
+  .dbr-main {
+    min-height: 780px;
+  }
+
+  .dbr-main-shade {
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 60%);
+  }
+
+  .dbr-main-content {
+    top: auto;
+    bottom: 96px;
+    right: 16px;
+    gap: 32px;
+    transform: none;
+  }
+
+  .dbr-ornament-star {
+    width: 32px;
+    height: 32px;
+  }
+
+  .dbr-ornament-line {
+    width: 30%;
+  }
+
+  .dbr-credit {
+    right: 16px;
+  }
+
+  .dbr-main-title {
+    white-space: nowrap;
+    font-size: clamp(36px, 11vw, 56px);
+  }
+
+  .dbr-main-tagline {
+    text-wrap: balance;
+  }
+
+  .dbr-cloud-c,
+  .dbr-cloud-d {
+    display: none;
+  }
+
+  .dbr-cloud-a {
+    top: 22%;
+  }
+
+  .dbr-section-title {
+    white-space: normal;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .dbr-footer-inner,
+  .dbr-footer-bottom {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ---------- Play: browser and launcher ---------- */
+/* Room for the status and both play options under the title. */
+.dbr-main-content {
+  gap: 28px;
+}
+
+.dbr-main-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  text-align: center;
+}
+
+.dbr-main-status .dbr-main-soon {
+  color: var(--dbr-red);
+}
+
+.dbr-main-release {
+  margin: 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 15px;
+  color: var(--dbr-sand);
+}
+
+.dbr-play {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.dbr-play-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 220px;
+  padding: 14px 22px 12px;
+  border: 1px solid var(--dbr-gold);
+  border-radius: 4px;
+  background: rgba(20, 11, 8, 0.72);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    transform 0.2s var(--dbr-spring-snappy);
+}
+
+.dbr-play-btn small {
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  color: var(--dbr-sand);
+}
+
+.dbr-play-btn.is-primary {
+  background: var(--dbr-maroon);
+}
+
+.dbr-play-btn:hover {
+  background: rgba(60, 33, 25, 0.9);
+  transform: translateY(-2px);
+}
+
+.dbr-play-btn.is-primary:hover {
+  background: #bd5656;
+}
+
+.dbr-play-btn:active {
+  transform: scale(0.97);
+}
+
+/* Phones and tablets can't run the launcher (dungeon-blitz-r.js). */
+.dbr-play-btn.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.dbr-play-other {
+  margin: -6px 0 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 13px;
+  text-align: center;
+  color: #a8978a;
+}
+
+.dbr-play-other a {
+  color: var(--dbr-sand);
+  text-underline-offset: 3px;
+}
+
+.dbr-play-other a:hover {
+  color: var(--dbr-cream);
+}
+
+@media (max-width: 900px) {
+  /* The hero now holds the play options too, so on narrow screens it flows from under the
+     header instead of being pinned to the bottom (where it would ride up under the nav). */
+  .dbr-main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: calc(var(--dbr-header-h) + 24px) 0 120px;
+  }
+
+  .dbr-main-content {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    transform: none;
+  }
+
+  .dbr-play-btn {
+    min-width: 0;
+    flex: 1 1 200px;
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbr-play-btn {
+    transition: none;
+  }
+}
+
+/* ---------- Phones and small tablets: a compact, solid header ---------- */
+/* One row for the logo and Play Now, then a slim tab row. The header is always solid here
+   (no fade-in), so the page never shows through it, and the active tab is a gold underline
+   instead of the desktop banner, which doesn't fit a narrow row. */
+@media (max-width: 900px) {
+  .dbr {
+    --dbr-header-h: 104px;
+  }
+
+  .dbr-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 60px 44px;
+    gap: 0;
+    height: var(--dbr-header-h);
+    padding: 0 16px;
+  }
+
+  .dbr-header::before {
+    opacity: 1 !important;
+    animation: none !important;
+    background: rgba(20, 11, 8, 0.96);
+  }
+
+  .dbr .dbr-header-bg {
+    display: none;
+  }
+
+  .dbr-header .dbr-logo {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .dbr-header .dbr-logo-mark {
+    filter: invert(0.93) !important;
+    animation: none !important;
+  }
+
+  .dbr-header .dbr-logo {
+    gap: 8px;
+  }
+
+  .dbr-header .dbr-logo img:first-child {
+    width: 40px;
+    height: auto;
+  }
+
+  .dbr-header .dbr-logo img:nth-child(2) {
+    width: 12px;
+    height: auto;
+  }
+
+  .dbr-header .dbr-logo img:last-child {
+    width: 50px;
+    height: auto;
+  }
+
+  .dbr-launch {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+
+  .dbr-nav {
+    order: initial;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    width: auto;
+    height: 44px;
+    margin: 0 -16px;
+    overflow: visible;
+    border-top: 1px solid rgba(234, 192, 107, 0.15);
+  }
+
+  .dbr-nav ul {
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  .dbr-nav li {
+    flex: 1;
+  }
+
+  .dbr-nav-item {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+  }
+
+  .dbr .dbr-nav-bg {
+    display: none;
+  }
+
+  .dbr-nav-item::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--dbr-gold);
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.4);
+    transition:
+      opacity 0.2s ease,
+      transform 0.3s var(--dbr-spring);
+  }
+
+  .dbr-nav-item.is-active {
+    color: var(--dbr-cream);
+  }
+
+  .dbr-nav-item.is-active::after {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .dbr-nav-item.is-soon {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* The mist clouds sat on top of the hero text at this width. */
+  .dbr-sky {
+    display: none;
+  }
+
+  .dbr-classes {
+    padding-top: 56px;
+  }
+
+  .dbr-classes-heading {
+    margin-bottom: 8px;
+  }
+
+  .dbr-classes-stage {
+    padding-top: 24px;
+  }
+
+  .dbr-class-info {
+    width: min(360px, 100%);
+  }
+
+  .dbr-class-desc {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbr-nav-item::after {
+    transition: none;
+  }
+}
+
+/* ---------- Discipline backdrop: the keep tower ---------- */
+.dbr-towers {
+  position: absolute;
+  inset: 0 0 200px;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 48%, #000 40%, transparent 78%);
+  mask-image: radial-gradient(ellipse 60% 62% at 50% 48%, #000 40%, transparent 78%);
+}
+
+.dbr .dbr-tower {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: min(115%, 820px);
+  opacity: 0;
+  filter: saturate(0.85) brightness(0.62);
+  transform: translate(-50%, -50%) scale(1.04);
+  transition:
+    opacity 0.6s ease,
+    transform 0.9s var(--dbr-spring);
+}
+
+.dbr .dbr-tower.is-shown {
+  opacity: 0.55;
+  transform: translate(-50%, -50%);
+}
+
+.dbr-classes-stage > :not(.dbr-towers):not(.dbr-sr-only) {
+  position: relative;
+}
+
+.dbr-tower-caption {
+  margin: 14px 0 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: rgba(224, 205, 167, 0.7);
+}
+
+.dbr-tower-caption strong {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--dbr-accent) 55%, #ffe0a2);
+}
+
+@media (max-width: 900px) {
+  .dbr-towers {
+    inset: 0 0 230px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 45% at 50% 32%, #000 35%, transparent 75%);
+    mask-image: radial-gradient(ellipse 85% 45% at 50% 32%, #000 35%, transparent 75%);
+  }
+
+  .dbr .dbr-tower {
+    top: 30%;
+    height: auto;
+    width: min(140%, 640px);
+  }
+
+  /* Footer: logo, text and links centred. */
+  .dbr-footer-inner {
+    justify-content: center;
+  }
+
+  .dbr-footer-brand {
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .dbr-footer-links {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .dbr-footer-bottom {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbr-classes,
+  .dbr .dbr-tower {
     transition: none;
   }
 }

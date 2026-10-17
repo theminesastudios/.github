@@ -1,0 +1,611 @@
+/* Feedback postcard dialog.
+   Card coordinates are the Figma design's pixels on an 865 × 600 card; the stage is
+   zoomed to fit the viewport (see feedback.js). */
+
+.fb {
+  --fb-ink: #727272;
+  --fb-brown: #7d6153;
+  --fb-spring: linear(0, 0.157, 0.438, 0.66, 0.808, 0.897, 0.948, 0.976, 0.99, 0.997, 1);
+
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 24px 16px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  overflow: auto;
+}
+
+.fb[open] {
+  display: grid;
+  place-items: center;
+}
+
+.fb::backdrop {
+  background: #1b1b1b;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fb[open] {
+    animation: fb-in 0.35s var(--fb-spring);
+  }
+
+  .fb[open]::backdrop {
+    animation: fb-fade 0.25s ease;
+  }
+}
+
+@keyframes fb-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes fb-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.fb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fb :focus-visible {
+  outline: 2px solid #e3b097;
+  outline-offset: 3px;
+}
+
+.fb-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.fb-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.fb-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.fb-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+/* ---------- The card ---------- */
+.fb-stage {
+  width: 865px;
+  height: 600px;
+  zoom: var(--fb-zoom, 1);
+  perspective: 2200px;
+}
+
+.fb-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s var(--fb-spring);
+}
+
+.fb-card[data-side="back"] {
+  transform: rotateY(180deg);
+}
+
+.fb-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10.47px;
+  background: #fff;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.fb-back {
+  transform: rotateY(180deg);
+}
+
+.fb-face img {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
+
+.fb-paper {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+  mix-blend-mode: darken;
+  pointer-events: none;
+}
+
+/* Front: "The Artifact Company of Istanbul" */
+.fb-front-panel {
+  position: absolute;
+  top: 16.43px;
+  left: 16.43px;
+  width: 832.14px;
+  height: 567.14px;
+  overflow: hidden;
+  border-radius: 7.19px;
+  background: linear-gradient(180deg, #2c3f55 0%, #534c32 24.519%, #5e3f40 46.635%, #7d6153 100%);
+}
+
+.fb-front-title {
+  top: 14.09px;
+  left: 21.27px;
+  width: 594px;
+  height: 126px;
+}
+
+.fb-front-scene {
+  position: absolute;
+  top: 181.74px;
+  left: 0;
+  width: 834.12px;
+  height: 405.23px;
+  overflow: hidden;
+}
+
+.fb-front-istanbul {
+  bottom: -49.48px;
+  left: calc(50% - 29.84px);
+  width: 2506.51px;
+  height: 358.53px;
+  transform: translateX(-50%);
+}
+
+.fb-front-byline {
+  top: 247.72px;
+  left: 14.79px;
+  width: 42px;
+  height: 21px;
+}
+
+/* Back: address side */
+.fb-back-texture {
+  top: 1.4px;
+  left: 0;
+  width: 865.12px;
+  height: 598.6px;
+  object-fit: cover;
+  opacity: 0.43;
+  mix-blend-mode: difference;
+  transform: rotate(180deg);
+  pointer-events: none;
+}
+
+.fb-message {
+  position: absolute;
+  top: 44px;
+  left: 44px;
+  width: 352px;
+  height: 512px;
+}
+
+.fb-message textarea {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #555;
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 22px;
+  line-height: 1.6;
+  letter-spacing: 0.4px;
+  resize: none;
+  outline: none;
+}
+
+.fb-message textarea::placeholder {
+  color: rgba(85, 85, 85, 0.55);
+}
+
+/* No focus frame on the note: the caret shows where you are writing, as on paper. */
+.fb .fb-message textarea:focus,
+.fb .fb-message textarea:focus-visible {
+  outline: none;
+}
+
+.fb-divider {
+  top: calc(35.58px + 268.95px);
+  left: calc(429.07px - 268.95px);
+  width: 537.91px;
+  height: 0.7px;
+  transform: rotate(90deg);
+}
+
+.fb-stamp-box {
+  position: absolute;
+  top: 23.72px;
+  left: 729.07px;
+  width: 105.35px;
+  height: 160.47px;
+  border: 1.395px solid #606060;
+  border-radius: 0.7px;
+  opacity: 0.4;
+}
+
+.fb-stamp {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fb-stamp-edge {
+  top: calc(31.4px - 0.19px);
+  left: calc(706.74px - 0.19px);
+  width: 119.13px;
+  height: 161.56px;
+}
+
+.fb-stamp-art {
+  position: absolute;
+  top: 42.09px;
+  left: 716.2px;
+  width: 99.89px;
+  height: 123.9px;
+  overflow: hidden;
+}
+
+.fb-stamp-shader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.29;
+}
+
+.fb-stamp-photos {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: luminosity;
+}
+
+.fb-stamp-photos img {
+  mix-blend-mode: luminosity;
+  object-fit: cover;
+}
+
+.fb-stamp-ibrahim { top: 24.74px; left: 3.42px; width: 65px; height: 115.42px; }
+.fb-stamp-mica { top: 30.92px; left: 27.05px; width: 70.77px; height: 126.79px; }
+.fb-stamp-logo { top: -0.41px; left: 69.27px; width: 31px; height: 34px; }
+.fb-stamp-title { top: 9.53px; left: 2.48px; width: 46px; height: 14px; }
+
+/* 170 × 136 frame texture, rotated 90° about the centre of its 136 × 170 slot. */
+.fb-stamp-frame {
+  position: absolute;
+  top: calc(-22.82px + 85.03px - 67.93px);
+  left: calc(-17.74px + 67.93px - 85.03px);
+  width: 170.05px;
+  height: 135.85px;
+  overflow: hidden;
+  mix-blend-mode: darken;
+  transform: rotate(90deg);
+}
+
+.fb-stamp-frame img {
+  top: 10.68%;
+  left: 10.09%;
+  width: 79.82%;
+  height: 83.33%;
+}
+
+.fb-stamp-value { top: 168.08px; left: 716.2px; width: 96px; height: 14px; }
+.fb-stamp-postmark { top: 68.98px; left: 719.4px; width: 95.1px; height: 97.02px; }
+
+/* "Postage Due • Deliver •" arc (text-path node, exported outlined with its noise filter). */
+.fb-postmark-text {
+  top: 125.63px;
+  left: 642.86px;
+  width: 114px;
+  height: 107px;
+  mix-blend-mode: difference;
+}
+
+.fb-address-lines {
+  top: calc(330.7px - 0.61px);
+  left: 473.02px;
+  width: 332.79px;
+  height: 139.45px;
+}
+
+.fb-address {
+  position: absolute;
+  top: 297px;
+  left: 472.56px;
+  display: flex;
+  flex-direction: column;
+  gap: 7.55px;
+  width: 332px;
+  margin: 0;
+  color: var(--fb-ink);
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 28.24px;
+  line-height: 1.35;
+  letter-spacing: 0.5647px;
+}
+
+/* "To:" and "From:" sit on the first two address lines, like a hand-addressed card. */
+.fb-address-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  height: 38.12px;
+  margin: 0;
+  font-size: 25px;
+  white-space: nowrap;
+}
+
+.fb-address-label {
+  flex: none;
+  color: rgba(85, 85, 85, 0.6);
+  font-size: 17px;
+}
+
+.fb-address-line input {
+  flex: 1;
+  min-width: 0;
+  height: 38.12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fb-ink);
+  font: inherit;
+  letter-spacing: inherit;
+  outline: none;
+}
+
+.fb-address-line input::placeholder {
+  color: rgba(85, 85, 85, 0.4);
+}
+
+/* As with the note: no focus frame, the caret shows where you write. */
+.fb .fb-address-line input:focus,
+.fb .fb-address-line input:focus-visible {
+  outline: none;
+}
+
+.fb-address-gap {
+  height: 32.4px;
+}
+
+.fb-address a {
+  display: block;
+  border: 0;
+  color: var(--fb-ink);
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.fb-address a:hover {
+  border: 0;
+  background: none;
+  color: var(--fb-brown);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.fb-meta {
+  position: absolute;
+  top: 526.67px;
+  left: 472.78px;
+  display: flex;
+  flex-direction: column;
+  gap: 7.88px;
+  margin: 0;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.3);
+  font-family: "Roboto Mono", monospace;
+  font-size: 15.76px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fb-meta b {
+  font-weight: 600;
+}
+
+.fb-watermark {
+  top: calc(476.02px - 11.16px);
+  left: calc(-12.56px - 11.16px);
+  width: 164.69px;
+  height: 163.43px;
+  mix-blend-mode: difference;
+}
+
+/* ---------- Call to action ---------- */
+.fb-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.fb-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-garamond, "EB Garamond", serif);
+  font-size: clamp(32px, 5vw, 48px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Paint order does the layering: Kaeru, then the pill, then the rest of the line.
+   All three are positioned with z-index: auto, so later siblings draw on top. */
+.fb-send-slot {
+  position: relative;
+  display: inline-flex;
+}
+
+.fb-kaeru {
+  position: absolute;
+  top: -70px;
+  left: 85px;
+  width: 85px;
+  height: 114px;
+  transform: rotate(12.59deg);
+  pointer-events: none;
+  transition: transform 0.35s var(--fb-spring);
+}
+
+.fb-title-end {
+  position: relative;
+}
+
+.fb-send {
+  position: relative;
+  padding: 4px 16px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  background: var(--fb-brown);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.2s var(--fb-spring);
+}
+
+.fb-send:hover {
+  background: #8e6f60;
+}
+
+.fb-send:active {
+  transform: scale(0.97);
+}
+
+/* No outline on the pill; Kaeru popping up marks keyboard focus instead. */
+.fb .fb-send:focus-visible {
+  outline: none;
+}
+
+.fb-send-slot:hover .fb-kaeru,
+.fb-send-slot:focus-within .fb-kaeru {
+  transform: rotate(6deg) translateY(-14px);
+}
+
+.fb-flip {
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-mono, "Spline Sans Mono", monospace);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fb-flip:hover {
+  color: #fff;
+}
+
+/* Honeypot field: out of sight and out of the tab order. */
+.fb-honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* While the card is being relayed, the send pill waits. */
+.fb-form.is-sending .fb-send {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.fb-status {
+  min-height: 1.4em;
+  margin: 0;
+  color: #e3b097;
+  font-family: var(--font-mono, "Spline Sans Mono", monospace);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Sent: the card is posted (lifts away) and comes back for the next note. */
+@media (prefers-reduced-motion: no-preference) {
+  .fb-card.is-posted {
+    animation: fb-post 0.9s var(--fb-spring);
+  }
+}
+
+@keyframes fb-post {
+  40% {
+    transform: rotateY(180deg) translateY(-40px) rotate(-3deg);
+    opacity: 0.6;
+  }
+}
+
+/* ---------- Phones: zoom into the writing half while the note has focus ---------- */
+/* While writing on a phone, the frame clips the zoomed card to the screen width (its address
+   half slides off). Otherwise it never clips, so the 3D flip can swing past the card's edges. */
+.fb-stage-frame {
+  max-width: 100%;
+}
+
+.fb-form.is-writing .fb-stage-frame {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Writing your name: the zoom moves over to the address half instead. */
+.fb-form.is-writing.is-writing-address .fb-stage {
+  margin-left: -425px;
+}
+
+.fb-form.is-writing {
+  gap: 28px;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: var(--fb-spring, ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-card,
+  .fb-kaeru,
+  .fb-send {
+    transition: none;
+  }
+}
