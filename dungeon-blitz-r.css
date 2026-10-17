@@ -1199,3 +1199,158 @@ body {
     transition: none;
   }
 }
+
+/* ---------- Phones and small tablets: a compact, solid header ---------- */
+/* One row for the logo and Play Now, then a slim tab row. The header is always solid here
+   (no fade-in), so the page never shows through it, and the active tab is a gold underline
+   instead of the desktop banner, which doesn't fit a narrow row. */
+@media (max-width: 900px) {
+  .dbr {
+    --dbr-header-h: 104px;
+  }
+
+  .dbr-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 60px 44px;
+    gap: 0;
+    height: var(--dbr-header-h);
+    padding: 0 16px;
+  }
+
+  .dbr-header::before {
+    opacity: 1 !important;
+    animation: none !important;
+    background: rgba(20, 11, 8, 0.96);
+  }
+
+  .dbr .dbr-header-bg {
+    display: none;
+  }
+
+  .dbr-header .dbr-logo {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .dbr-header .dbr-logo-mark {
+    filter: invert(0.93) !important;
+    animation: none !important;
+  }
+
+  .dbr-header .dbr-logo {
+    gap: 8px;
+  }
+
+  .dbr-header .dbr-logo img:first-child {
+    width: 40px;
+    height: auto;
+  }
+
+  .dbr-header .dbr-logo img:nth-child(2) {
+    width: 12px;
+    height: auto;
+  }
+
+  .dbr-header .dbr-logo img:last-child {
+    width: 50px;
+    height: auto;
+  }
+
+  .dbr-launch {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+
+  .dbr-nav {
+    order: initial;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    width: auto;
+    height: 44px;
+    margin: 0 -16px;
+    overflow: visible;
+    border-top: 1px solid rgba(234, 192, 107, 0.15);
+  }
+
+  .dbr-nav ul {
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  .dbr-nav li {
+    flex: 1;
+  }
+
+  .dbr-nav-item {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+  }
+
+  .dbr .dbr-nav-bg {
+    display: none;
+  }
+
+  .dbr-nav-item::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--dbr-gold);
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.4);
+    transition:
+      opacity 0.2s ease,
+      transform 0.3s var(--dbr-spring);
+  }
+
+  .dbr-nav-item.is-active {
+    color: var(--dbr-cream);
+  }
+
+  .dbr-nav-item.is-active::after {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .dbr-nav-item.is-soon {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* The mist clouds sat on top of the hero text at this width. */
+  .dbr-sky {
+    display: none;
+  }
+
+  .dbr-classes {
+    padding-top: 56px;
+  }
+
+  .dbr-classes-heading {
+    margin-bottom: 8px;
+  }
+
+  .dbr-classes-stage {
+    padding-top: 24px;
+  }
+
+  .dbr-class-info {
+    width: min(360px, 100%);
+  }
+
+  .dbr-class-desc {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbr-nav-item::after {
+    transition: none;
+  }
+}
