@@ -1,19 +1,23 @@
-// Posts for the Updates pages (updates.html, update.html?post=<slug>), newest first.
-// Loaded as a plain script so the pages render on first paint (no fetch), which lets the
-// cover art morph between the list and the post with a cross-document view transition.
-// date is ISO (YYYY-MM-DD); body paragraphs and changes are plain text.
+// Index of the Updates posts (updates.html, update.html?post=<slug>).
+// Loaded as a plain script so both pages render on first paint (no fetch), which lets the
+// cover art, label and date morph between the list and the post with a view transition.
+//
+// Each post's text is Markdown in data/updates/<slug>.md (headings, lists, **bold**, links,
+// `code`, quotes). To publish a post, add its Markdown file and an entry here.
+// date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
-    slug: "v1-25-0",
-    version: "v1.25.0",
-    date: "2026-08-20",
-    project: "Dungeon Blitz",
-    image: "assets/updates/v1.25.0.png",
-    imageWidth: 958,
-    imageHeight: 646,
-    imageAlt: "A Rogue in a red cape crouches with a glowing blade beside a training dummy.",
-    title: "Viperblade & Flurry of Daggers",
-    summary: "Viper ranged-attack poison now stacks with Flurry poison.",
-    changes: ["Flurry poison max stacks: 8 → 16.", "Flurry poison DoT ratio: 1 → 0.8."],
+    slug: "2026-10-16",
+    date: "2026-10-16",
+    project: "Dungeon Blitz R",
+    image: "assets/updates/2026-10-16-mica-art.webp",
+    imageWidth: 1500,
+    imageHeight: 855,
+    imageAlt:
+      "Mica's painting of a knight in gold-trimmed armour riding a spiked blue beast past a striped tent in a sunny village.",
+    title: "Rankings, resumable runs and the Green Knight",
+    summary:
+      "Global rankings, dungeon runs that survive a disconnect, the Green Knight's Hallow's Eve arena and a long list of crash fixes.",
+    body: "data/updates/2026-10-16.md",
   },
 ];
