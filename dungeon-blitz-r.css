@@ -1424,3 +1424,119 @@ body {
     transition: none;
   }
 }
+
+/* ---------- About & FAQ (plain text for players and search engines) ---------- */
+/* The footer's cloud skyline overlaps the section above it by 230px, so that room now sits
+   under the FAQ instead of under the class picker. */
+.dbr-classes-stage {
+  padding-bottom: 72px;
+}
+
+.dbr-towers {
+  bottom: 40px;
+}
+
+.dbr-faq {
+  position: relative;
+  z-index: 1;
+  padding: 88px 24px 260px;
+  background: linear-gradient(to bottom, #140b08, #1b100b 40%, #140b08);
+  color: var(--dbr-sand);
+  text-align: left;
+}
+
+.dbr-faq-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.dbr-faq .dbr-section-title {
+  justify-content: center;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.dbr-faq-lead {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 17px;
+  line-height: 1.65;
+  text-align: center;
+  color: var(--dbr-cream);
+}
+
+.dbr-faq-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 48px;
+}
+
+.dbr-faq-item h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-vollkorn), serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #fff;
+}
+
+.dbr-faq-item p {
+  margin: 0;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.dbr-faq-item a {
+  color: var(--dbr-cream);
+  text-decoration: underline;
+  text-decoration-color: rgba(234, 192, 107, 0.5);
+  text-underline-offset: 3px;
+}
+
+.dbr-faq-item a:hover {
+  color: #fff;
+  text-decoration-color: var(--dbr-gold);
+}
+
+.dbr-footer-credit {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 28px;
+  font-family: var(--font-roboto-serif), serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #7f7066;
+}
+
+@media (max-width: 1100px) {
+  .dbr-classes-stage {
+    padding-bottom: 56px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dbr-towers {
+    bottom: 40px;
+  }
+
+  .dbr-faq {
+    padding: 64px 16px 250px;
+  }
+
+  .dbr-faq-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .dbr-faq-lead {
+    margin-bottom: 36px;
+    font-size: 16px;
+  }
+
+  .dbr-footer-credit {
+    padding: 0 16px 24px;
+    text-align: center;
+  }
+}
