@@ -46,7 +46,7 @@ window.MINESA_MEMBERS = {
       ["I am working as maintainer on", { chip: "dungeon-blitz" }, "preservation project."],
     ],
     socials: {},
-    signature: { src: "assets/signatures/Paul%20I..svg", width: 395, height: 248 },
+    signature: { src: "assets/signatures/cheetoo.svg", width: 395, height: 248 },
     gallery: [],
   },
   telahair: {
@@ -62,7 +62,7 @@ window.MINESA_MEMBERS = {
     socials: {
       Instagram: "https://www.instagram.com/ardaarican39/",
     },
-    signature: { src: "assets/signatures/Arda%20A..svg", width: 232, height: 102 },
+    signature: { src: "assets/signatures/telahair.svg", width: 232, height: 102 },
     gallery: [],
   },
   neo: {
@@ -102,7 +102,7 @@ window.MINESA_MEMBERS = {
       GitHub: "https://github.com/michii18",
       X: "https://x.com/1828Mich",
     },
-    signature: { src: "assets/signatures/Micha%20G..svg", width: 250, height: 105 },
+    signature: { src: "assets/signatures/mica.svg", width: 250, height: 105 },
     gallery: [
       { src: "assets/member_assets/image_mica_1.png", width: 580, height: 362, alt: "Mica's framed painting of a family portrait." },
       { src: "assets/member_assets/image_mica_2.png", width: 580, height: 362, alt: "Mica's painting of two koi circling a lotus flower." },
