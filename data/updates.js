@@ -7,6 +7,20 @@
 // date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
+    slug: "2026-10-17",
+    date: "2026-10-17",
+    project: "Dungeon Blitz R",
+    image: "assets/dungeon-blitz-r/main-bg.webp",
+    imageWidth: 2560,
+    imageHeight: 1186,
+    imageAlt:
+      "Dungeon Blitz R key art: a mage, a warrior and a rogue charge at a red, fox-like beast on a sunny hillside.",
+    title: "Ruby charms, new stable prices and a smoother start",
+    summary:
+      "Ruby charms grant twice the Critical Bonus, mounts and pets are repriced, the studio gets its own guild banner, and the game loads again for everyone.",
+    body: "data/updates/2026-10-17.md",
+  },
+  {
     slug: "2026-10-16",
     date: "2026-10-16",
     project: "Dungeon Blitz R",
