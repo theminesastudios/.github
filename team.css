@@ -1,0 +1,465 @@
+/* Team page (Figma: v6/Minesa > Desktop - Team, 1512 × 982).
+   style.css is shared for fonts and the stamp nav; its home-page layout rules are reset here. */
+
+/* Opening a member morphs "Meet with", the avatar and the name into member.html. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+.team-page {
+  --team-bg: #040405;
+  --team-blue: #0057ff;
+  --primary: #ffffff;
+  --team-spring: linear(0, 0.157, 0.438, 0.66, 0.808, 0.897, 0.948, 0.976, 0.99, 0.997, 1);
+  --team-spring-pop: linear(0, 0.204, 0.624, 0.96, 1.08, 1.06, 1.02, 1);
+
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--team-bg);
+  color: #fff;
+}
+
+.team-page main {
+  display: block;
+  height: auto;
+}
+
+.team-page main:focus {
+  outline: none;
+}
+
+.team-skip {
+  position: fixed;
+  z-index: 20;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border: 1px solid #fff !important;
+  border-radius: 6px;
+  background: var(--team-bg);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transform: translateY(-200%);
+}
+
+.team-skip:focus-visible {
+  transform: none;
+}
+
+.team-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Navigation ---------- */
+.team-header {
+  position: relative;
+  z-index: 5;
+  height: 100px;
+}
+
+.team-logo {
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  display: inline-flex;
+  border: 0 !important;
+  border-radius: 6px;
+}
+
+.team-logo img {
+  display: block;
+}
+
+.team-logo:focus-visible,
+.team-page .site-nav__item:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.team-page .site-nav {
+  position: absolute;
+}
+
+.team-page .site-nav__item[aria-current="page"] {
+  opacity: 1;
+}
+
+/* ---------- Stage ---------- */
+.team-main {
+  overflow: hidden;
+}
+
+/* The design is composed on a fixed 1512 × 982 canvas; zoom scales it to the window. */
+.team-stage {
+  position: relative;
+  width: 1512px;
+  /* Fills the window down to the bottom edge, where the portraits are cut as in the design. */
+  height: var(--team-stage-h, 882px);
+  margin: 0 auto;
+  zoom: var(--team-zoom, 1);
+}
+
+/* The line-up fades out at the bottom, so neither the window edge nor a photo's crop
+   ever shows as a hard line. */
+.team-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0;
+  height: 220px;
+  background: linear-gradient(to bottom, transparent, var(--team-bg) 85%);
+  pointer-events: none;
+}
+
+.team-title {
+  position: absolute;
+  top: 0;
+  left: 150px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  margin: 0;
+  font-family: var(--font-garamond);
+  font-size: 128px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 154px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* The last word morphs into whoever you point at ("Meet with Neo"). */
+.team-title-word {
+  position: relative;
+  display: inline-block;
+  color: var(--team-word-color, var(--team-blue));
+  transition: color 0.35s ease;
+}
+
+.team-title-text {
+  display: inline-block;
+}
+
+.team-title-text.is-leaving {
+  animation: team-word-out 0.22s ease forwards;
+}
+
+/* Back to "team" when the pointer leaves: a quiet cross-fade, no blur or bounce. */
+.team-title-text.is-leaving.is-quiet {
+  animation: team-word-fade-out 0.2s ease forwards;
+}
+
+.team-title-text.is-entering.is-quiet {
+  animation: team-word-fade-in 0.3s ease both;
+}
+
+@keyframes team-word-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes team-word-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.team-title-text.is-entering {
+  animation: team-word-in 0.42s var(--team-spring) both;
+}
+
+@keyframes team-word-out {
+  to {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-0.18em) scale(0.96);
+  }
+}
+
+@keyframes team-word-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(0.22em) scale(1.04);
+  }
+}
+
+.team-lineup {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Stage coordinates are relative to the page frame, which starts 100px above the stage. */
+.member {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.team-page .member-link {
+  /* Undo style.css's home-page "li a" chip styles. */
+  display: block;
+  width: auto;
+  padding: 0;
+  gap: 0;
+  border: 0 !important;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+  transition: none;
+}
+
+.member-link:hover,
+.member-link:focus-visible {
+  border: 0 !important;
+  background: none !important;
+  transform: none !important;
+  outline: none;
+}
+
+.member-portrait {
+  position: absolute;
+  top: calc(var(--py) * 1px - 100px);
+  left: calc(var(--px) * 1px);
+  width: calc(var(--pw) * 1px);
+  height: calc(var(--ph) * 1px);
+  pointer-events: auto;
+  /* Each photo's own crop edge fades out too (they end at different heights). */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 180px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 180px), transparent);
+}
+
+.member-portrait img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Each frame shows a cropped region of its photo (Figma CROP fill). team.js sizes and offsets
+   the <img> from data-crop. */
+.member-portrait {
+  overflow: hidden;
+}
+
+.member-portrait img {
+  inset: auto;
+  object-fit: fill;
+  max-width: none;
+  /* Black & white at rest; whoever you point at comes back in colour. */
+  filter: grayscale(1) contrast(1.06) brightness(0.82);
+  transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.member.is-active .member-portrait img {
+  filter: grayscale(0) contrast(1) brightness(1);
+}
+
+.member-tag {
+  position: absolute;
+  top: calc(var(--ty) * 1px - 100px);
+  left: calc(var(--tx) * 1px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.member-avatar {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: transform 0.45s var(--team-spring-pop);
+}
+
+.member-name {
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-mono);
+  font-size: 24px;
+  letter-spacing: 2.1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+
+/* Focus: just the mini avatar and the name light up. */
+.member.is-active .member-avatar {
+  transform: scale(1.08);
+}
+
+.member.is-active .member-name {
+  color: #fff;
+}
+
+.member-link:focus-visible .member-tag {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* Arrival starts once every photo has loaded (team.js adds .is-ready), so nothing pops in
+   half-drawn. The inline script in team.html sets .js and a safety timeout. */
+.js .team-stage:not(.is-ready) .member-portrait,
+.js .team-stage:not(.is-ready) .member-tag {
+  opacity: 0;
+}
+
+/* Arriving by view transition (from a member page): everything is in place at once, so the
+   snapshot the morph starts from isn't half-faded. */
+.team-no-arrival .member-portrait,
+.team-no-arrival .member-tag {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* Arrival: each portrait rises in, then its avatar pops (stagger set inline by team.js). */
+@media (prefers-reduced-motion: no-preference) {
+  .team-stage.is-arriving .member-portrait {
+    animation: team-portrait-in 0.8s var(--team-spring) both;
+    animation-delay: calc(var(--delay, 0s) - 0.3s);
+  }
+
+  .team-stage.is-arriving .member-tag {
+    animation: team-tag-in 0.6s var(--team-spring-pop) both;
+    animation-delay: var(--delay, 0s);
+  }
+}
+
+@keyframes team-portrait-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes team-tag-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.6);
+  }
+}
+
+/* ---------- Small screens: a two-column roster instead of the overlapping line-up ---------- */
+/* Phones, portrait tablets and short landscape screens get a stacked roster: the
+   overlapping line-up only reads when the window is roughly the design's shape. */
+@media (max-width: 760px), (max-height: 520px), (orientation: portrait) and (max-width: 1100px) {
+  .team-header {
+    height: 88px;
+  }
+
+  .team-logo {
+    top: 20px;
+    left: 20px;
+  }
+
+  .team-stage {
+    width: auto;
+    height: auto;
+    padding: 0 20px 48px;
+    zoom: 1;
+  }
+
+  .team-title {
+    position: static;
+    font-size: clamp(44px, 13vw, 64px);
+    line-height: 1.1;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .team-lineup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 36px 24px;
+    max-width: 1100px;
+  }
+
+
+
+  /* style.css lays home-page list items out as flex rows; these are plain blocks. */
+  .member {
+    position: static;
+    display: block;
+    pointer-events: auto;
+  }
+
+  .team-stage::after {
+    display: none;
+  }
+
+  .team-page .member-link {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .member-portrait,
+  .member-tag {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  /* Each frame at full width, cropped to its top 60% (head and shoulders), like the
+     page edge crops them on desktop. */
+  .member-portrait {
+    width: 100%;
+    height: auto;
+    aspect-ratio: calc(var(--pw) / (var(--ph) * 0.6));
+    overflow: hidden;
+  }
+
+  /* Top 60% of each frame's crop. */
+  .member-portrait img {
+    --crop-visible: 0.6;
+  }
+
+  .member-tag {
+    gap: 10px;
+    padding-right: 12px;
+    align-self: flex-start;
+  }
+
+  .member-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .member-name {
+    font-size: 18px;
+    letter-spacing: 1.8px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-tag,
+  .member-avatar,
+  .member-name,
+  .team-title-word {
+    transition: none;
+  }
+}
