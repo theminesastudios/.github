@@ -1,0 +1,574 @@
+/* Updates (Figma: v6/Minesa > Desktop - Releases: list 335:9298, post 335:10939).
+   style.css is shared for fonts and the stamp nav; its home-page layout rules are reset here.
+   Exposure Italic is set in EB Garamond italic, SF Pro in the system UI stack. */
+
+/* The cover art, version and date morph from the card into the post (and back). */
+@view-transition {
+  navigation: auto;
+}
+
+.updates-page {
+  --u-dark: #040405;
+  --u-paper: #fffef0;
+  --u-violet: #7254f9;
+  --u-ink: #000000;
+  --u-spring: linear(0, 0.157, 0.438, 0.66, 0.808, 0.897, 0.948, 0.976, 0.99, 0.997, 1);
+  --u-spring-pop: linear(0, 0.204, 0.624, 0.96, 1.08, 1.06, 1.02, 1);
+  --u-gutter: clamp(16px, 9.9vw, 150px);
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.updates-page--list {
+  --primary: #ffffff;
+  background: var(--u-dark);
+  color: #fff;
+}
+
+.updates-page--post {
+  --primary: #000000;
+  background: var(--u-paper);
+  color: var(--u-ink);
+}
+
+.updates-page main {
+  display: block;
+  height: auto;
+}
+
+.updates-page main:focus,
+.post:focus {
+  outline: none;
+}
+
+.updates-page ::selection {
+  background: var(--u-violet);
+  color: #fff;
+}
+
+.u-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.u-skip {
+  position: fixed;
+  z-index: 20;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border: 1px solid currentColor !important;
+  border-radius: 6px;
+  background: var(--u-dark);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transform: translateY(-200%);
+}
+
+.updates-page--post .u-skip {
+  background: var(--u-paper);
+  color: var(--u-ink);
+}
+
+.u-skip:focus-visible {
+  transform: none;
+}
+
+/* ---------- Navigation ---------- */
+.u-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  min-height: 100px;
+  padding: 0 50px;
+}
+
+.u-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.u-logo {
+  display: inline-flex;
+  border: 0 !important;
+  border-radius: 6px;
+}
+
+.u-logo img {
+  display: block;
+}
+
+.u-section {
+  border: 0 !important;
+  font-family: var(--font-garamond);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--u-ink) !important;
+}
+
+.u-section:hover {
+  color: var(--u-violet) !important;
+}
+
+.u-logo:focus-visible,
+.u-section:focus-visible,
+.updates-page .site-nav__item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.updates-page .site-nav {
+  position: absolute;
+}
+
+.updates-page .site-nav__item[aria-current="page"] {
+  opacity: 1;
+}
+
+/* ---------- List ---------- */
+.updates-page .updates-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+  padding: 0 var(--u-gutter) 96px;
+}
+
+.updates-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--font-garamond);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 75px;
+  color: var(--u-violet);
+}
+
+/* Figma: the 75 × 75 github frame with the mark inset 9.36% / 8.33%. */
+.updates-title__github {
+  display: grid;
+  place-items: center;
+  width: 75px;
+  height: 75px;
+  border: 0 !important;
+  border-radius: 50%;
+  transition: transform 0.45s var(--u-spring-pop);
+}
+
+.updates-title__github img {
+  display: block;
+  width: 64.17px;
+  height: auto;
+}
+
+.updates-title__github:hover {
+  border: 0 !important;
+  background: none !important;
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.updates-title__github:focus-visible {
+  outline: 2px solid var(--u-violet);
+  outline-offset: 4px;
+}
+
+.updates-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.update-item {
+  width: min(540px, 100%);
+  animation: update-card-in 0.7s var(--u-spring) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+}
+
+/* Held on its first frame (hidden) until updates.js has loaded the art. */
+.updates-list:not(.is-ready) .update-item {
+  animation-play-state: paused;
+}
+
+.updates-list.no-enter .update-item {
+  animation: none;
+}
+
+/* The global `li a` menu styles are reset for the card. */
+.updates-page .update-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 720px;
+  height: 300px;
+  max-height: 360px;
+  padding: 20px 20px 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 16px;
+  background: var(--u-paper);
+  color: var(--u-ink);
+  font-family: var(--font-garamond);
+  font-size: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: box-shadow 0.35s ease;
+}
+
+.updates-page .update-card:hover {
+  border: 0;
+  border-radius: 16px;
+  background: var(--u-paper);
+  color: var(--u-ink);
+  /* style.css tilts every hovered "li a"; the card itself stays put. */
+  transform: none;
+  box-shadow: 0 18px 40px -18px rgba(114, 84, 249, 0.65);
+}
+
+.updates-page .update-card:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.update-card__mark {
+  display: block;
+  flex: none;
+  width: 25.955px;
+  height: 20px;
+  transition: transform 0.5s var(--u-spring-pop);
+}
+
+.update-card:hover .update-card__mark {
+  transform: rotate(-12deg) scale(1.2);
+}
+
+.update-card__project {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+.update-card__row {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 0;
+  transform-origin: 50% 100%;
+  transition: transform 0.55s var(--u-spring-pop);
+}
+
+/* Selecting a card tilts what's inside it; the card itself stays put. */
+.update-card:hover .update-card__row,
+.update-card:focus-visible .update-card__row {
+  transform: rotate(-2deg) translateY(-4px);
+}
+
+/* Vertical labels: the version reads bottom-to-top, the date top-to-bottom (Figma -90° / +90°). */
+.update-card__version,
+.update-card__date,
+.post-hero__version,
+.post-hero__date {
+  flex: none;
+  font-family: var(--font-garamond);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: lining-nums;
+  writing-mode: vertical-rl;
+  text-box: trim-both cap alphabetic;
+}
+
+.update-card__version,
+.post-hero__version {
+  transform: rotate(180deg);
+}
+
+.update-card__version,
+.update-card__date {
+  font-size: 28px;
+}
+
+.update-card__art {
+  display: block;
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--u-spring);
+}
+
+.update-card:hover .update-card__art {
+  transform: scale(1.03);
+}
+
+.updates-empty {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+@keyframes update-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) rotate(1.5deg);
+  }
+}
+
+/* ---------- Post ---------- */
+.post-main {
+  padding: 30px var(--u-gutter) 96px;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.post-kicker {
+  margin: 0;
+  font-family: var(--font-garamond);
+  font-size: 48px;
+  font-style: italic;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.post-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 750px) auto;
+  align-items: center;
+  gap: 20px;
+  max-width: 100%;
+}
+
+.post-hero__version,
+.post-hero__date {
+  font-size: 48px;
+}
+
+.post-hero__art {
+  display: block;
+  width: 750px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 750 / 400;
+  object-fit: cover;
+}
+
+.post-body {
+  width: min(858px, 100%);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: normal;
+}
+
+.post-title {
+  /* Figma leaves one empty 16px line between the title and the text. */
+  margin: 0 0 19px;
+  font-family: var(--font-garamond);
+  font-size: 32px;
+  font-variant-numeric: lining-nums;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.post-body p {
+  margin: 0;
+}
+
+.post-body p + p {
+  margin-top: 1em;
+}
+
+.post-changes {
+  margin: 0;
+  padding-left: 1.5em;
+  list-style: disc;
+}
+
+/* The global `li` / `li a` menu styles don't apply to post content. */
+.post-changes li {
+  position: static;
+}
+
+.post-body a,
+.post-missing a,
+.post-pager a {
+  display: inline;
+  width: auto;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px dotted currentColor;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.post-body a:hover,
+.post-missing a:hover,
+.post-pager a:hover {
+  border: 0;
+  border-bottom: 2px solid var(--u-violet);
+  background: none;
+  color: var(--u-violet);
+  transform: none;
+}
+
+.post-missing {
+  font-family: var(--font-ui);
+  font-size: 16px;
+}
+
+.post-pager {
+  display: flex;
+  justify-content: space-between;
+  width: min(858px, 100%);
+  font-family: var(--font-garamond);
+  font-size: 24px;
+  font-style: italic;
+}
+
+/* ---------- View transition ---------- */
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--u-spring, ease);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+/* ---------- Smaller windows ---------- */
+@media (max-width: 900px) {
+  .post-kicker {
+    font-size: clamp(32px, 6vw, 48px);
+  }
+
+  .post-hero {
+    gap: clamp(8px, 2vw, 20px);
+  }
+
+  .post-hero__version,
+  .post-hero__date {
+    font-size: clamp(22px, 5.4vw, 48px);
+  }
+}
+
+@media (max-width: 768px) {
+  .u-header {
+    padding: 0 20px;
+  }
+
+  .u-section {
+    font-size: 32px;
+  }
+
+  .updates-title {
+    font-size: 48px;
+    line-height: 60px;
+  }
+
+  .updates-title__github {
+    width: 60px;
+    height: 60px;
+  }
+
+  .updates-title__github img {
+    width: 51px;
+  }
+
+  .updates-page .update-card {
+    height: clamp(200px, 58vw, 300px);
+    gap: 16px;
+    padding: 16px 16px 0;
+  }
+
+  .update-card__row {
+    gap: 14px;
+  }
+
+  .update-card__version,
+  .update-card__date {
+    font-size: 24px;
+  }
+
+  .post-main {
+    padding-top: 12px;
+  }
+
+  .post {
+    gap: 28px;
+  }
+
+  .post-title {
+    font-size: 28px;
+  }
+}
+
+/* The section name gives way to the stamps on the narrowest phones. */
+@media (max-width: 400px) {
+  .u-section {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  .update-item {
+    animation: none;
+  }
+
+  .updates-page .update-card,
+  .update-card__art,
+  .update-card__mark,
+  .updates-title__github {
+    transition: none;
+  }
+
+  .update-card__row {
+    transition: none;
+  }
+
+  .update-card:hover .update-card__row,
+  .update-card:focus-visible .update-card__row,
+  .update-card:hover .update-card__art,
+  .update-card:hover .update-card__mark {
+    transform: none;
+  }
+}

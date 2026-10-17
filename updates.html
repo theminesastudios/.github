@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Updates | The Minesa Studios</title>
+    <meta
+      name="description"
+      content="Patch notes and news from The Minesa Studios: what changed in Dungeon Blitz and our other projects, update by update."
+    />
+    <link rel="canonical" href="https://theminesa.studio/updates.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Updates | The Minesa Studios" />
+    <meta property="og:description" content="Patch notes and news from The Minesa Studios." />
+    <meta property="og:url" content="https://theminesa.studio/updates.html" />
+    <meta name="theme-color" content="#040405" />
+    <link rel="stylesheet" href="style.css?v=9" />
+    <link rel="stylesheet" href="updates.css?v=6" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="expect" href="#updates-ready" blocking="render" />
+  </head>
+  <body class="updates-page updates-page--list">
+    <a class="u-skip" href="#updates">Skip to updates</a>
+
+    <header class="u-header">
+      <a class="u-logo" href="./index.html" aria-label="The Minesa Studios home">
+        <img src="./assets/navigation-assets/Logo.svg" alt="" width="52" height="51" />
+      </a>
+
+      <nav class="site-nav" aria-label="Main">
+        <a class="site-nav__item site-nav__item--team" href="./team.html">
+          <img src="./assets/navigation-assets/TEAM%20STAMP.svg" alt="" width="50" height="50" />
+          <span>Team</span>
+        </a>
+        <span class="site-nav__divider" aria-hidden="true"></span>
+        <a class="site-nav__item site-nav__item--updates" href="./updates.html" aria-current="page">
+          <img src="./assets/navigation-assets/RELEASE%20STAMP.svg" alt="" width="50" height="50" />
+          <span>Updates</span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="updates-main" id="updates" tabindex="-1">
+      <h1 class="updates-title">
+        <a
+          class="updates-title__github"
+          href="https://github.com/theminesastudios/dungeon-blitz-r-launcher/releases"
+          aria-label="Releases on GitHub"
+        >
+          <img src="./assets/updates/github.svg" alt="" width="64" height="63" />
+        </a>
+        <span>Updates</span>
+      </h1>
+
+      <ul class="updates-list" id="updates-list"></ul>
+      <noscript><p class="updates-empty">Turn on JavaScript to read our updates.</p></noscript>
+    </main>
+
+    <script src="data/updates.js?v=3"></script>
+    <script src="updates.js?v=3"></script>
+    <span id="updates-ready" hidden></span>
+  </body>
+</html>
