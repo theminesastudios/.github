@@ -6,12 +6,27 @@
 	// ---------- Classes & disciplines ----------
 	// Names, descriptions and talent trees come from the game client (DungeonBlitz.swf); art is
 	// exported from UI_1 / UI_4 / UI_Library with ffdec.
+	// Each discipline's backdrop is its level-10 tower from the player's keep (LevelsHome.swf,
+	// names from BuildingTypes), tinted with an accent colour taken from its art.
+	const TOWERS = {
+		sentinel: { name: "Stormgaze Refuge", accent: "#3fb7c9" },
+		justicar: { name: "Flamefury Dais", accent: "#e0832b" },
+		templar: { name: "Templar Citadel", accent: "#d9b75a" },
+		executioner: { name: "Elysian Soultrap", accent: "#46b6d6" },
+		shadowwalker: { name: "Twisted Nethertotem", accent: "#7d5fd6" },
+		soulthief: { name: "Soulthief Lair", accent: "#5f7fd9" },
+		flameseer: { name: "Magmaheart Furnace", accent: "#e2552a" },
+		frostwarden: { name: "Coldsnap Conduit", accent: "#7cc6ef" },
+		necromancer: { name: "Necromancer Tower", accent: "#6fbf62" },
+	};
+
 	const discipline = (slug, name, treeName, description) => ({
 		slug,
 		name,
 		description,
 		portrait: `${ASSET}/disciplines/${slug}.svg`,
 		tree: { name: treeName, icon: `${ASSET}/talents/${slug}.svg` },
+		tower: { art: `${ASSET}/towers/${slug}.webp`, ...TOWERS[slug] },
 	});
 
 	const CLASSES = [
@@ -98,8 +113,13 @@
 		const discGroup = el("div", { class: "dbr-disciplines", role: "radiogroup" });
 		const live = el("p", { class: "dbr-sr-only", "aria-live": "polite" });
 
+		// Two stacked backdrops: the new tower fades in over the old one.
+		const backdrops = [0, 1].map(() => img(null, { class: "dbr-tower", "aria-hidden": "true", decoding: "async" }));
+		let frontBackdrop = 0;
+		const towerCaption = el("p", { class: "dbr-tower-caption" });
+
 		stage.append(
-			img(`${ASSET}/content-bg.webp`, { class: "dbr-classes-bg", "aria-hidden": "true" }),
+			el("div", { class: "dbr-towers", "aria-hidden": "true" }, backdrops),
 			el("div", { class: "dbr-class-picker", role: "radiogroup", "aria-label": "Class" }, classButtons),
 			el("div", { class: "dbr-class-showcase" }),
 			el("div", { class: "dbr-class-info" }, [
@@ -112,6 +132,7 @@
 				badge,
 				desc,
 				discGroup,
+				towerCaption,
 			]),
 			live,
 		);
@@ -163,6 +184,25 @@
 			});
 			radioKeys(buttons, (i) => selectDiscipline(i, true));
 			discGroup.replaceChildren(img(`${ASSET}/disciplines-bg.webp`, { class: "dbr-disciplines-bg", "aria-hidden": "true" }), ...buttons);
+
+			// Backdrop: this discipline's keep tower and accent colour.
+			const section = stage.closest(".dbr-classes");
+			if (section) section.style.setProperty("--dbr-accent", d.tower.accent);
+			const current = backdrops[frontBackdrop];
+			if (!current.getAttribute("src")) {
+				current.src = d.tower.art;
+				current.classList.add("is-shown");
+			} else if (current.getAttribute("src") !== d.tower.art) {
+				const next = backdrops[1 - frontBackdrop];
+				const show = () => {
+					next.classList.add("is-shown");
+					current.classList.remove("is-shown");
+					frontBackdrop = 1 - frontBackdrop;
+				};
+				next.src = d.tower.art;
+				next.decode().then(show, show);
+			}
+			towerCaption.replaceChildren("Keep tower: ", el("strong", { text: d.tower.name }));
 
 			if (announce) live.textContent = `${d.name}, ${gameClass.name}. ${d.description}`;
 			return buttons;
