@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dungeon Blitz: R | Free-to-play side-scrolling brawler</title>
+    <title>Dungeon Blitz R | Play Dungeon Blitz free in your browser</title>
     <meta
       name="description"
-      content="Dungeon Blitz: R is an open-source fan revival of Dungeon Blitz by The Minesa Studios: a free-to-play, side-scrolling brawler with light RPG and MMO elements. Play in your browser or with the launcher."
+      content="Play Dungeon Blitz again. Dungeon Blitz R is a free, open-source revival of the side-scrolling brawler: Paladin, Rogue and Mage, nine disciplines and multiplayer dungeons, in your browser or with the launcher."
     />
     <link rel="canonical" href="https://theminesa.studio/dungeon-blitz-r.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Minesa Studios" />
-    <meta property="og:title" content="Dungeon Blitz: R" />
+    <meta property="og:title" content="Dungeon Blitz R: play Dungeon Blitz again" />
     <meta
       property="og:description"
       content="A free-to-play, side-scrolling brawler with light RPG and MMO elements. Play in your browser or with the launcher."
@@ -26,7 +26,7 @@
       href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@400;700&amp;family=Roboto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Vollkorn+SC:wght@400;600;700;900&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="dungeon-blitz-r.css?v=11" />
+    <link rel="stylesheet" href="dungeon-blitz-r.css?v=12" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="preload" as="image" href="assets/dungeon-blitz-r/main-bg.webp" fetchpriority="high" />
     <script type="application/ld+json">
@@ -38,8 +38,13 @@
         "url": "https://theminesa.studio/dungeon-blitz-r.html",
         "image": "https://theminesa.studio/assets/dungeon-blitz-r/og.jpg",
         "description": "An open-source fan revival of Dungeon Blitz: a free-to-play, side-scrolling brawler with light RPG and MMO elements.",
-        "genre": ["Action RPG", "Side-scrolling brawler", "MMO"],
         "gamePlatform": ["Web browser", "Windows", "macOS"],
+        "genre": ["Action RPG", "Side-scrolling brawler", "MMO"],
+        "inLanguage": "en",
+        "potentialAction": {
+          "@type": "PlayAction",
+          "target": "https://dungeonblitzr.theminesa.studio/web"
+        },
         "applicationCategory": "Game",
         "playMode": ["SinglePlayer", "MultiPlayer"],
         "isAccessibleForFree": true,
@@ -48,6 +53,62 @@
         "author": { "@type": "Organization", "name": "The Minesa Studios", "url": "https://theminesa.studio" },
         "publisher": { "@type": "Organization", "name": "The Minesa Studios", "url": "https://theminesa.studio" },
         "sameAs": ["https://github.com/theminesastudios", "https://discord.gg/the-minesa-studios-1295512336353722438"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Dungeon Blitz R?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dungeon Blitz R is a free-to-play, open-source revival of Dungeon Blitz, the side-scrolling brawler with light RPG and MMO elements. The Minesa Studios rebuilt it with multiplayer, fixes and balancing, so you can play Dungeon Blitz again."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I still play Dungeon Blitz?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Dungeon Blitz R is in Early Access now, with the public release on October 30. Play it in your browser at dungeonblitzr.theminesa.studio/web, or download the launcher for Windows or macOS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Dungeon Blitz R free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, it's free to play."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need Flash Player to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No plugin needed. The browser version runs on Ruffle, a Flash Player emulator, and the launcher is a standalone app for Windows and macOS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which classes and disciplines can I play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Three classes with three disciplines each: the Paladin (Sentinel, Justicar, Templar), the Rogue (Viperblade, Shadowstalker, Soulthief) and the Mage (Flameseer, Frostbringer, Necromancer)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who makes Dungeon Blitz R?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Minesa Studios, a small team of players. Dungeon Blitz was originally created by Blue Mammoth Games. Dungeon Blitz R is a fan revival, open source on GitHub, and the community lives on our Discord. Patch notes are on the Updates page."
+            }
+          }
+        ]
       }
     </script>
     <script src="dungeon-blitz-r.js?v=5" defer></script>
@@ -185,6 +246,43 @@
           <!-- Built by dungeon-blitz-r.js from its class data. -->
           <div class="dbr-classes-stage" data-class-showcase></div>
         </section>
+
+        <section id="about" class="dbr-faq" aria-labelledby="dbr-faq-title">
+          <div class="dbr-faq-inner">
+            <h2 id="dbr-faq-title" class="dbr-section-title">Dungeon Blitz, back again</h2>
+            <p class="dbr-faq-lead">
+              Dungeon Blitz was a free-to-play browser brawler: you picked a Paladin, Rogue or Mage, chose one of three
+              disciplines and fought through dungeons with friends. Dungeon Blitz R brings it back, playable in your
+              browser or with a launcher, with multiplayer, fixes and balancing.
+            </p>
+            <div class="dbr-faq-list">
+            <div class="dbr-faq-item">
+              <h3>What is Dungeon Blitz R?</h3>
+              <p>Dungeon Blitz R is a free-to-play, open-source revival of Dungeon Blitz, the side-scrolling brawler with light RPG and MMO elements. The Minesa Studios rebuilt it with multiplayer, fixes and balancing, so you can play Dungeon Blitz again.</p>
+            </div>
+            <div class="dbr-faq-item">
+              <h3>Can I still play Dungeon Blitz?</h3>
+              <p>Yes. Dungeon Blitz R is in Early Access now, with the public release on October 30. Play it in your browser at <a href="https://dungeonblitzr.theminesa.studio/web" target="_blank" rel="noopener">dungeonblitzr.theminesa.studio/web</a>, or <a href="#play">download the launcher</a> for Windows or macOS.</p>
+            </div>
+            <div class="dbr-faq-item">
+              <h3>Is Dungeon Blitz R free?</h3>
+              <p>Yes, it's free to play.</p>
+            </div>
+            <div class="dbr-faq-item">
+              <h3>Do I need Flash Player to play?</h3>
+              <p>No plugin needed. The browser version runs on Ruffle, a Flash Player emulator, and the launcher is a standalone app for Windows and macOS.</p>
+            </div>
+            <div class="dbr-faq-item">
+              <h3>Which classes and disciplines can I play?</h3>
+              <p>Three classes with three disciplines each: the Paladin (Sentinel, Justicar, Templar), the Rogue (Viperblade, Shadowstalker, Soulthief) and the Mage (Flameseer, Frostbringer, Necromancer).</p>
+            </div>
+            <div class="dbr-faq-item">
+              <h3>Who makes Dungeon Blitz R?</h3>
+              <p>The Minesa Studios, a small team of players. Dungeon Blitz was originally created by Blue Mammoth Games. Dungeon Blitz R is a fan revival, open source on <a href="https://github.com/theminesastudios" target="_blank" rel="noopener">GitHub</a>, and the community lives on our <a href="https://discord.gg/the-minesa-studios-1295512336353722438" target="_blank" rel="noopener">Discord</a>. Patch notes are on the <a href="./updates.html">Updates</a> page.</p>
+            </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="dbr-footer">
@@ -243,6 +341,9 @@
           <span>© 2026 The Minesa Studios</span>
           <span>Made in Worldwide</span>
         </div>
+        <p class="dbr-footer-credit">
+          Dungeon Blitz was originally created by Blue Mammoth Games. Dungeon Blitz R is a fan-made revival by The Minesa Studios.
+        </p>
       </footer>
     </div>
   </body>
