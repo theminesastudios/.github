@@ -711,23 +711,18 @@ body {
   background: var(--dbr-sand);
 }
 
+/* One size for every discipline, set so the longest name (Shadowstalker) fits the column. */
 .dbr-class-name {
   margin: 12px 0 4px;
   font-family: var(--font-roboto-serif), serif;
-  font-size: 48px;
+  font-size: 32px;
   font-style: italic;
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -1.44px;
+  line-height: 1.72;
+  letter-spacing: -0.96px;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--dbr-cream);
-}
-
-.dbr-class-name.is-long {
-  font-size: 28px;
-  letter-spacing: -0.84px;
-  line-height: 1.97;
 }
 
 .dbr-class-badge {

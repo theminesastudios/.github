@@ -160,7 +160,6 @@
 			discTree.replaceChildren(img(d.tree.icon, { class: "is-ringed", width: "16", height: "16" }), d.tree.name);
 			classTree.replaceChildren(img(gameClass.tree.icon, { width: "16", height: "16" }), gameClass.tree.name);
 			name.textContent = d.name;
-			name.classList.toggle("is-long", d.name.length > 8);
 			badge.textContent = gameClass.name;
 			desc.textContent = d.description;
 
