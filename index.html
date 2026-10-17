@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home | The Minesa Studios</title>
     <link rel="stylesheet" href="style.css?v=9" />
-    <link rel="stylesheet" href="feedback.css?v=12" />
+    <link rel="stylesheet" href="feedback.css?v=13" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Roboto+Mono:wght@400;600;700&display=swap"
     />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <script type="module" src="feedback.js?v=10"></script>
+    <script type="module" src="feedback.js?v=11"></script>
   </head>
   <body>
     <nav class="site-nav" aria-label="Main">
@@ -697,15 +697,17 @@
       </button>
 
       <form class="fb-form" id="fb-form" novalidate>
+        <!-- Left empty by people; bots that fill it are ignored (FormSubmit's honeypot). -->
+        <input class="fb-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="fb-stage-frame">
         <div class="fb-stage">
           <div class="fb-card" data-side="back">
             <div class="fb-face fb-front" aria-hidden="true">
               <div class="fb-front-panel">
-                <img class="fb-front-title" src="./assets/feedback/front-title.svg" alt="" width="594" height="126" loading="lazy" />
+                <img class="fb-front-title" src="./assets/feedback/front-title.svg?v=2" alt="" width="594" height="126" loading="lazy" />
                 <div class="fb-front-scene">
                   <img class="fb-front-istanbul" src="./assets/feedback/front-istanbul.svg" alt="" width="2507" height="359" loading="lazy" />
-                  <img class="fb-front-byline" src="./assets/feedback/front-byline.svg" alt="" width="42" height="21" loading="lazy" />
+                  <img class="fb-front-byline" src="./assets/feedback/front-byline.svg?v=2" alt="" width="42" height="21" loading="lazy" />
                 </div>
               </div>
               <img class="fb-paper" src="./assets/feedback/paper.webp" alt="" loading="lazy" />
