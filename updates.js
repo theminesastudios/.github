@@ -137,7 +137,11 @@
     const older = posts[index + 1];
     const content = el("div", { class: "post-content", "aria-busy": "true" });
     article.append(
-      el("p", { class: "post-kicker", text: post.kicker || "Weekly Updates" }),
+      post.kicker
+        ? el("p", { class: "post-kicker", text: post.kicker })
+        : el("p", { class: "post-kicker post-kicker--logo" }, [
+            el("img", { src: "./assets/navigation-assets/Logo-black.svg", alt: "The Minesa Studios", width: "48", height: "47" }),
+          ]),
       el("div", { class: "post-hero" }, [
         morph(el("span", { class: "post-hero__version", text: sideLabel(post) }), "version", post),
         morph(art(post, "post-hero__art", "eager"), "art", post),

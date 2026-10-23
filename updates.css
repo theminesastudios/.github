@@ -345,6 +345,16 @@
   text-wrap: balance;
 }
 
+.post-kicker--logo {
+  line-height: 0;
+}
+
+.post-kicker--logo img {
+  display: block;
+  width: 48px;
+  height: auto;
+}
+
 .post-hero {
   display: grid;
   grid-template-columns: auto minmax(0, 750px) auto;
@@ -565,6 +575,10 @@
 @media (max-width: 900px) {
   .post-kicker {
     font-size: clamp(32px, 6vw, 48px);
+  }
+
+  .post-kicker--logo img {
+    width: 40px;
   }
 
   .post-hero {
