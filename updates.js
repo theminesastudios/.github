@@ -135,19 +135,27 @@
 
     const newer = posts[index - 1];
     const older = posts[index + 1];
+    const weekday = new Intl.DateTimeFormat("en-GB", { weekday: "long", timeZone: "UTC" }).format(
+      new Date(`${post.date}T00:00:00Z`),
+    );
     const content = el("div", { class: "post-content", "aria-busy": "true" });
     article.append(
-      post.kicker
-        ? el("p", { class: "post-kicker", text: post.kicker })
-        : el("p", { class: "post-kicker post-kicker--logo" }, [
-            el("img", { src: "./assets/navigation-assets/Logo-black.svg", alt: "The Minesa Studios", width: "48", height: "47" }),
+      el("header", { class: "brief-hero" }, [
+        morph(el("time", { class: "brief-edge brief-edge--date", datetime: post.date, text: formatDate(post.date) }), "date", post),
+        morph(el("span", { class: "brief-edge brief-edge--label", text: sideLabel(post) }), "version", post),
+        el("div", { class: "brief-frame" }, [
+          morph(art(post, "brief-frame__art", "eager"), "art", post),
+          el("p", { class: "brief-frame__overlay", "aria-hidden": "true" }, [
+            el("span", { class: "brief-frame__the", text: "The" }),
+            el("span", { class: "brief-frame__day", text: `${weekday} Release` }),
           ]),
-      el("div", { class: "post-hero" }, [
-        morph(el("span", { class: "post-hero__version", text: sideLabel(post) }), "version", post),
-        morph(art(post, "post-hero__art", "eager"), "art", post),
-        morph(el("time", { class: "post-hero__date", datetime: post.date, text: formatDate(post.date) }), "date", post),
+        ]),
+        el("div", { class: "brief-sub" }, [
+          el("h1", { class: "brief-title", text: post.title }),
+          post.caption ? el("p", { class: "brief-caption", text: post.caption }) : el("span"),
+        ]),
       ]),
-      el("div", { class: "post-body" }, [el("h1", { class: "post-title", text: post.title }), content]),
+      content,
     );
     if (newer || older) {
       article.append(
@@ -157,11 +165,25 @@
         ]),
       );
     }
+    article.append(
+      el("footer", { class: "brief-footer" }, [
+        el("p", {}, [
+          el("span", { class: "brief-footer__muted", text: "Made by " }),
+          el("strong", { text: "The Minesa Studios" }),
+          el("span", { class: "brief-footer__muted", text: " with " }),
+          el("em", { text: "your" }),
+          el("span", { class: "brief-footer__muted", text: " bug reports" }),
+        ]),
+        el("p", { class: "brief-footer__links" }, [
+          el("a", { href: "https://dungeonblitzr.theminesa.studio/web", target: "_blank", rel: "noopener", text: "Play" }),
+          el("a", { href: "./updates.html", text: "All updates" }),
+          el("a", { href: "https://discord.gg/the-minesa-studios-1295512336353722438", target: "_blank", rel: "noopener", text: "Discord" }),
+        ]),
+      ]),
+    );
 
-    // The text arrives after the first paint; until then (or if it can't load) the summary
-    // stands in, so the page is never empty.
     const showSummary = () => {
-      content.replaceChildren(el("p", { text: post.summary || "" }));
+      content.replaceChildren(el("p", { class: "brief-lead", text: post.summary || "" }));
       content.removeAttribute("aria-busy");
     };
     if (!post.body) showSummary();
@@ -170,11 +192,62 @@
         .then((response) => (response.ok ? response.text() : Promise.reject(response.status)))
         .then((markdown) => {
           content.innerHTML = renderMarkdown(markdown);
+          briefSections(content);
           content.removeAttribute("aria-busy");
           content.classList.add("is-loaded");
         })
         .catch(showSummary);
     }
+  }
+
+  // Groups the rendered post into sections: the opening text as a boxed lead, then one
+  // section per h2. Bullets that open with **bold** become numbered items.
+  function briefSections(root) {
+    const nodes = [...root.childNodes].filter((n) => n.nodeType === 1);
+    root.replaceChildren();
+    let section = el("section", { class: "brief-section brief-section--lead" });
+    let body = el("div", { class: "brief-section__body" });
+    section.append(body);
+    for (const node of nodes) {
+      if (node.tagName === "H2") {
+        if (body.childNodes.length) root.append(section);
+        section = el("section", { class: "brief-section" });
+        node.className = "brief-section__title";
+        body = el("div", { class: "brief-section__body" });
+        section.append(node, body);
+        continue;
+      }
+      body.append(node);
+    }
+    if (body.childNodes.length) root.append(section);
+
+    let count = 0;
+    root.querySelectorAll(".brief-section__body > ul").forEach((list) => {
+      const items = [...list.children];
+      if (!items.length || !items.every((li) => li.firstChild?.nodeName === "STRONG")) return;
+      const tag = list.closest(".brief-section")?.querySelector(".brief-section__title")?.textContent || "";
+      const out = el("div", { class: "brief-items" });
+      for (const li of items) {
+        const head = li.firstChild;
+        head.remove();
+        count += 1;
+        const text = el("div", { class: "brief-item__text" });
+        text.innerHTML = li.innerHTML.trim();
+        out.append(
+          el("article", { class: "brief-item" }, [
+            el("span", { class: "brief-item__num", "aria-hidden": "true", text: String(count).padStart(2, "0") }),
+            el("div", { class: "brief-item__body" }, [
+              el("div", { class: "brief-item__head" }, [
+                el("h3", { class: "brief-item__title", text: head.textContent.replace(/[.:]\s*$/, "") }),
+                tag ? el("span", { class: "brief-item__tag", text: tag }) : el("span"),
+              ]),
+              text,
+            ]),
+          ]),
+        );
+      }
+      list.replaceWith(out);
+    });
   }
 
   // ---------- Markdown ----------
