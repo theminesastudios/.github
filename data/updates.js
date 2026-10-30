@@ -32,7 +32,6 @@ window.MINESA_UPDATES = [
     title: "Rankings, resumable runs, Ruby charms and the Green Knight",
     summary:
       "Global rankings, dungeon runs that survive a disconnect, the Green Knight's Hallow's Eve arena, stronger Ruby charms and a long list of crash fixes.",
-    caption: "Painting by Mica, for the 16 Oct release.",
     body: "data/updates/2026-10-16.md",
   },
 ];
