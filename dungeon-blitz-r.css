@@ -1065,6 +1065,14 @@ body {
   color: var(--dbr-red);
 }
 
+.dbr-main-status .dbr-main-soon.is-live {
+  color: var(--dbr-gold);
+}
+
+.dbr-main-release a {
+  color: var(--dbr-cream);
+}
+
 .dbr-main-release {
   margin: 0;
   font-family: var(--font-roboto-serif), serif;

@@ -7,6 +7,20 @@
 // date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
+    slug: "2026-10-29",
+    date: "2026-10-29",
+    project: "Dungeon Blitz R",
+    image: "assets/updates/2026-10-29-cover.webp",
+    imageWidth: 1347,
+    imageHeight: 813,
+    imageAlt:
+      "A painting of a couple walking a white dog on a leash along a coastal path lined with red autumn trees and a wooden fence, looking out over a blue sea toward hills.",
+    title: "Legends' Inn guild raid, Neo's quests and Dread gates",
+    summary:
+      "Legends' Inn opens every Wednesday as a guild raid, Neo hands out daily and weekly quests, five regions get Dread gates, skill upgrades are instant and you can teleport from the map.",
+    body: "data/updates/2026-10-29.md",
+  },
+  {
     slug: "2026-10-22",
     date: "2026-10-22",
     project: "Dungeon Blitz R",
