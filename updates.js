@@ -3,6 +3,7 @@
 // Runs synchronously at the end of <body>, so the page is complete on its first paint; a
 // post's Markdown text (data/updates/<slug>.md) is fetched and rendered after that.
 (function () {
+  window.minesaRenderMarkdown = renderMarkdown;
   const SITE = "https://theminesa.studio";
   const PROJECT_MARKS = {
     "Dungeon Blitz R": "assets/updates/dungeon-blitz-mark.svg",
