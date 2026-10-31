@@ -54,6 +54,41 @@ body {
   overflow: hidden;
 }
 
+/* Loading screen: a braid fills as the page loads (braid-progress.js), then it fades out.
+   Clicking pauses it; Esc skips it. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background-color: var(--background-color);
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader__bar {
+  width: min(320px, 70vw);
+  height: 32px;
+}
+
+.loader__hint {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -120,8 +155,10 @@ header a:hover {
   color: var(--primary) !important;
 }
 
-header a:hover svg path {
-  animation-duration: 0.3s !important;
+/* The logo's letters squash and stretch from their feet when hovered (logo-hop.js). */
+header svg path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
 }
 
 a {
