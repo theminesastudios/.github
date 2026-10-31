@@ -131,18 +131,23 @@ function open(event) {
     shader = createShaderFill(shaderCanvas, STAMP_SHADER);
   }
 
-  // The card arrives picture-side up, then turns over to the side you write on. On phones the
-  // note isn't focused automatically, so the keyboard doesn't jump up uninvited.
+  // The card arrives picture-side up and stays there for two seconds, then turns over to the
+  // side you write on. On phones the note isn't focused automatically, so the keyboard
+  // doesn't jump up uninvited.
   const focusNote = () => !COMPACT_QUERY.matches && textarea.focus({ preventScroll: true });
   if (REDUCED_MOTION.matches) {
     setSide("back");
     focusNote();
   } else {
+    // Land on the front at once (no turn), so the full two seconds are spent on the picture.
+    card.style.transition = "none";
     setSide("front");
+    void card.offsetWidth;
+    card.style.transition = "";
     flipTimer = setTimeout(() => {
       setSide("back");
-      setTimeout(focusNote, 450);
-    }, 650);
+      setTimeout(focusNote, 1100);
+    }, 2000);
   }
 }
 
@@ -251,4 +256,6 @@ COMPACT_QUERY.addEventListener("change", () => dialog.open && fitCard());
 // theminesa.studio/#feedback opens the card directly (the card itself prints THEMINESA.STUDIO/FEEDBACK).
 const openFromHash = () => location.hash === "#feedback" && open();
 window.addEventListener("hashchange", openFromHash);
-openFromHash();
+// On the home page, wait for the loading screen to clear so the card isn't shown behind it.
+if (document.getElementById("loader")) document.addEventListener("loader:done", openFromHash, { once: true });
+else openFromHash();
