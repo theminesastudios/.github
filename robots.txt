@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /post-maker.html
 
 Sitemap: https://theminesa.studio/sitemap.xml

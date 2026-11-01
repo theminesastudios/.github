@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post maker | The Minesa Studios</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="updates.css?v=9" />
+    <link rel="stylesheet" href="post-maker.css?v=1" />
+  </head>
+  <body class="pm">
+    <header class="pm-header">
+      <a href="./index.html" class="pm-logo"><img src="./assets/navigation-assets/Logo-black.svg" alt="The Minesa Studios" width="40" height="39" /></a>
+      <h1>Post maker</h1>
+      <span class="pm-user" data-user hidden></span>
+      <button type="button" class="pm-link" data-signout hidden>Sign out</button>
+    </header>
+
+    <section class="pm-card" data-signin>
+      <h2>Sign in</h2>
+      <p>
+        Paste a GitHub fine-grained token for <code>theminesastudios/.github</code> with
+        <strong>Contents: Read and write</strong>.
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one</a>.
+        Only the owner's account can use this page.
+      </p>
+      <form data-signin-form>
+        <input type="password" name="token" placeholder="github_pat_…" autocomplete="off" required />
+        <label class="pm-check"><input type="checkbox" name="remember" checked /> Remember on this browser</label>
+        <button type="submit">Sign in</button>
+      </form>
+      <p class="pm-status" data-signin-status></p>
+    </section>
+
+    <main class="pm-grid" data-editor hidden>
+      <form class="pm-card pm-form" data-post-form>
+        <label>Date <input type="date" name="date" required /></label>
+        <label>Project <input type="text" name="project" value="Dungeon Blitz R" required /></label>
+        <label>Version <small>(optional)</small> <input type="text" name="version" /></label>
+        <label>Title <input type="text" name="title" required /></label>
+        <label>Summary <textarea name="summary" rows="3" required></textarea></label>
+        <label>Cover image <input type="file" name="cover" accept="image/*" /></label>
+        <img class="pm-cover" data-cover-preview alt="" hidden />
+        <label>Cover description <small>(alt text)</small> <textarea name="imageAlt" rows="2"></textarea></label>
+        <label>Post text <small>(Markdown)</small> <textarea name="body" rows="18" required></textarea></label>
+        <div class="pm-actions">
+          <button type="submit">Publish</button>
+          <button type="button" class="pm-link" data-clear>Clear draft</button>
+        </div>
+        <p class="pm-status" data-post-status></p>
+      </form>
+
+      <section class="pm-card pm-preview">
+        <p class="pm-label">Preview</p>
+        <h2 class="post-title" data-preview-title></h2>
+        <div class="post-content is-loaded" data-preview-body></div>
+      </section>
+    </main>
+
+    <script src="updates.js?v=6"></script>
+    <script src="post-maker.js?v=1"></script>
+  </body>
+</html>
