@@ -7,6 +7,19 @@
 // date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
+    slug: "2026-11-05",
+    date: "2026-11-05",
+    project: "Dungeon Blitz R",
+    version: "v2026.11.05.1",
+    image: "assets/updates/2026-11-05-cover.webp",
+    imageWidth: 1450,
+    imageHeight: 952,
+    imageAlt: "Harvest Scene in the Delaware Valley, George Inness, 1867. oil on canvas",
+    title: "Boss fixes, all-week guild raids, and protection against bot floods",
+    summary: "This week we fixed boss fights in several dungeons, let guilds open the Legends' Inn gate on any day, buffed Heavy Blows, made touch controls easier to use, and added protection against the bot floods from 29 October.",
+    body: "data/updates/2026-11-05.md",
+  },
+  {
     slug: "2026-10-29",
     date: "2026-10-29",
     project: "Dungeon Blitz R",
