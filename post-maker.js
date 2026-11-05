@@ -183,7 +183,12 @@
     button.disabled = true;
     try {
       say(status, "Reading the site…");
-      const [indexJs, sitemap] = await Promise.all([readFile("data/updates.js"), readFile("sitemap.xml")]);
+      const [indexJs, sitemap, listPage, postPage] = await Promise.all([
+        readFile("data/updates.js"),
+        readFile("sitemap.xml"),
+        readFile("updates.html"),
+        readFile("update.html"),
+      ]);
       if (indexJs.includes(`slug: ${js(slug)}`)) throw new Error(`A post for ${slug} already exists`);
 
       const imagePath = `assets/updates/${slug}-cover.webp`;
@@ -221,14 +226,26 @@
         );
       }
 
+      // The pages load data/updates.js with a ?v= number; bump it so browsers and the CDN
+      // fetch the new list instead of serving the cached one.
+      const bumpVersion = (html, name) => {
+        const pattern = /(data\/updates\.js\?v=)(\d+)/;
+        if (!pattern.test(html)) throw new Error(`${name} has an unexpected shape`);
+        return html.replace(pattern, (_, prefix, n) => `${prefix}${Number(n) + 1}`);
+      };
+      const newListPage = bumpVersion(listPage, "updates.html");
+      const newPostPage = bumpVersion(postPage, "update.html");
+
       say(status, "Uploading…");
       const blob = (content, encoding) =>
         gh(`/repos/${OWNER}/${REPO}/git/blobs`, { method: "POST", body: JSON.stringify({ content, encoding }) });
-      const [image, markdown, index, map] = await Promise.all([
+      const [image, markdown, index, map, list, page] = await Promise.all([
         b64Blob(cover.blob).then((data) => blob(data, "base64")),
         blob(b64Text(`${post.body}\n`), "base64"),
         blob(b64Text(newIndex), "base64"),
         blob(b64Text(newSitemap), "base64"),
+        blob(b64Text(newListPage), "base64"),
+        blob(b64Text(newPostPage), "base64"),
       ]);
 
       say(status, "Committing…");
@@ -244,6 +261,8 @@
             file(`data/updates/${slug}.md`, markdown.sha),
             file("data/updates.js", index.sha),
             file("sitemap.xml", map.sha),
+            file("updates.html", list.sha),
+            file("update.html", page.sha),
           ],
         }),
       });
