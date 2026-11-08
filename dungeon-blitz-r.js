@@ -247,12 +247,14 @@
 	// ---------- Launcher download ----------
 	const RELEASE_API = "https://api.github.com/repos/theminesastudios/dungeon-blitz-r-launcher/releases/latest";
 
-	// Which release file each device gets. Linux has no build yet, so it falls back to the
-	// release page like an unknown device does.
+	// Which release file each device gets. An unknown device falls back to the release page.
 	const ASSETS = {
 		"win-x64": { name: "Windows", detail: "Windows 64-bit installer", pattern: /-win-x64-setup\.exe$/ },
 		"win-ia32": { name: "Windows", detail: "Windows 32-bit installer", pattern: /-win-ia32-setup\.exe$/ },
 		mac: { name: "macOS", detail: "macOS disk image", pattern: /-mac-x64\.dmg$/ },
+		linux: { name: "Linux", detail: "Linux AppImage", pattern: /-linux-x86_64\.AppImage$/ },
+		"win7-x64": { name: "Windows", detail: "Windows 7/8 64-bit installer", pattern: /-win7-x64-setup\.exe$/ },
+		"win7-ia32": { name: "Windows", detail: "Windows 7/8 32-bit installer", pattern: /-win7-ia32-setup\.exe$/ },
 	};
 
 	const buttons = document.querySelectorAll("[data-launcher-download]");
@@ -284,20 +286,40 @@
 			button.setAttribute("aria-disabled", "true");
 			button.classList.add("is-disabled");
 		});
-		if (metaEl) metaEl.textContent = "Desktop only (Windows and macOS)";
+		if (metaEl) metaEl.textContent = "Desktop only (Windows, macOS and Linux)";
 		if (otherEl) otherEl.hidden = true;
 		return;
 	}
 
 	if (labelEl && target) labelEl.textContent = `Download for ${target.name}`;
-	if (metaEl && platform === "linux") metaEl.textContent = "No Linux build yet: Windows and macOS";
 
 	// Without the release list every link keeps pointing at the release page, which still works.
-	fetch(RELEASE_API, { headers: { Accept: "application/vnd.github+json" } })
-		.then((res) => {
-			if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
-			return res.json();
-		})
+	// GitHub allows 60 anonymous API calls an hour per IP, so keep the answer for 10 minutes.
+	const CACHE_KEY = "dbr-launcher-release";
+	function cachedRelease() {
+		try {
+			const hit = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "null");
+			if (hit && Date.now() - hit.at < 600000) return hit.release;
+		} catch (e) {}
+		return null;
+	}
+	function loadRelease() {
+		const hit = cachedRelease();
+		if (hit) return Promise.resolve(hit);
+		return fetch(RELEASE_API, { headers: { Accept: "application/vnd.github+json" } })
+			.then((res) => {
+				if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
+				return res.json();
+			})
+			.then((release) => {
+				try {
+					sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), release }));
+				} catch (e) {}
+				return release;
+			});
+	}
+
+	loadRelease()
 		.then((release) => {
 			const assets = Array.isArray(release.assets) ? release.assets : [];
 			const version = String(release.tag_name || "").replace(/^v/, "");
