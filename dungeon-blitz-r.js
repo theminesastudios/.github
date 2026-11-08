@@ -245,7 +245,9 @@
 	}
 
 	// ---------- Launcher download ----------
-	const RELEASE_API = "https://api.github.com/repos/theminesastudios/dungeon-blitz-r-launcher/releases/latest";
+	// The launcher repository is private, so each release is mirrored to a public Cloudflare R2
+	// bucket, with a latest.json shaped like GitHub's releases/latest answer.
+	const RELEASE_API = "https://downloads.theminesa.studio/launcher/latest.json";
 
 	// Which release file each device gets. An unknown device falls back to the release page.
 	const ASSETS = {
@@ -293,8 +295,8 @@
 
 	if (labelEl && target) labelEl.textContent = `Download for ${target.name}`;
 
-	// Without the release list every link keeps pointing at the release page, which still works.
-	// GitHub allows 60 anonymous API calls an hour per IP, so keep the answer for 10 minutes.
+	// Without the release list every link keeps pointing at this section.
+	// Keep the answer for 10 minutes so a reload does not refetch it.
 	const CACHE_KEY = "dbr-launcher-release";
 	function cachedRelease() {
 		try {
@@ -306,9 +308,9 @@
 	function loadRelease() {
 		const hit = cachedRelease();
 		if (hit) return Promise.resolve(hit);
-		return fetch(RELEASE_API, { headers: { Accept: "application/vnd.github+json" } })
+		return fetch(RELEASE_API, { headers: { Accept: "application/json" } })
 			.then((res) => {
-				if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
+				if (!res.ok) throw new Error(`Download server responded ${res.status}`);
 				return res.json();
 			})
 			.then((release) => {
