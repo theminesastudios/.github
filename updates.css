@@ -128,6 +128,7 @@
   align-items: flex-start;
   gap: 36px;
   padding: 0 var(--u-gutter) 96px;
+  container-type: inline-size;
 }
 
 .updates-title {
@@ -171,8 +172,8 @@
 }
 
 .updates-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 36px;
   width: 100%;
   margin: 0;
@@ -181,7 +182,7 @@
 }
 
 .update-item {
-  width: min(540px, 100%);
+  min-width: 0;
   animation: update-card-in 0.7s var(--u-spring) both;
   animation-delay: calc(var(--i, 0) * 70ms + 80ms);
 }
@@ -193,6 +194,18 @@
 
 .updates-list.no-enter .update-item {
   animation: none;
+}
+
+@container (min-width: 600px) {
+  .updates-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 960px) {
+  .updates-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* The global `li a` menu styles are reset for the card. */
