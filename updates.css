@@ -202,12 +202,6 @@
   }
 }
 
-@container (min-width: 960px) {
-  .updates-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 /* The global `li a` menu styles are reset for the card. */
 .updates-page .update-card {
   position: relative;
