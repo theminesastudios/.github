@@ -7,6 +7,18 @@
 // date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
+    slug: "2026-11-12",
+    date: "2026-11-12",
+    project: "Dungeon Blitz R",
+    image: "assets/updates/2026-11-12-cover.webp",
+    imageWidth: 1448,
+    imageHeight: 1086,
+    imageAlt: "Justicar & Flameseer on fire",
+    title: "New talent builds, better chat, a new world map, gear sets and a lot of bug fixes.",
+    summary: "New talent builds, better chat, a new world map, gear sets and a lot of bug fixes",
+    body: "data/updates/2026-11-12.md",
+  },
+  {
     slug: "2026-11-05",
     date: "2026-11-05",
     project: "Dungeon Blitz R",
