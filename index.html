@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Minesa Studios | Dungeon Blitz R, mini-interaction and Kaeru</title>
+    <title>Play Dungeon Blitz R Free Online | The Minesa Studios</title>
     <meta
       name="description"
       content="The Minesa Studios brings fun back to apps and your computer: Dungeon Blitz R, the free revival of Dungeon Blitz you can play in your browser, plus mini-interaction and Kaeru."
@@ -11,11 +11,18 @@
     <link rel="canonical" href="https://theminesa.studio/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Minesa Studios" />
-    <meta property="og:title" content="The Minesa Studios" />
-    <meta property="og:description" content="Bringing fun back to apps and your computer: Dungeon Blitz R, mini-interaction and Kaeru." />
+    <meta property="og:title" content="Play Dungeon Blitz R Free Online | The Minesa Studios" />
+    <meta property="og:description" content="Play Dungeon Blitz: R, the free browser revival of Dungeon Blitz. Discover more projects from The Minesa Studios." />
     <meta property="og:url" content="https://theminesa.studio/" />
     <meta property="og:image" content="https://theminesa.studio/assets/og-home.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Minesa Studios" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Play Dungeon Blitz R Free Online | The Minesa Studios" />
+    <meta name="twitter:description" content="Play Dungeon Blitz: R, the free browser revival of Dungeon Blitz. Discover more projects from The Minesa Studios." />
+    <meta name="twitter:image" content="https://theminesa.studio/assets/og-home.jpg" />
+    <meta name="twitter:image:alt" content="The Minesa Studios" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -43,7 +50,7 @@
         ]
       }
     </script>
-    <link rel="stylesheet" href="style.css?v=16" />
+    <link rel="stylesheet" href="style.css?v=17" />
     <link rel="stylesheet" href="feedback.css?v=14" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,107 +63,6 @@
     <script src="logo-hop.js?v=1" defer></script>
   </head>
   <body>
-    <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100">
-      <canvas class="loader__bar"></canvas>
-      <p class="loader__hint">Click to pause · Esc to skip</p>
-    </div>
-    <script src="braid-progress.js?v=17"></script>
-    <script>
-      // A brown braid fills as the page's images and fonts arrive, then the loading screen
-      // fades away. It shows once a session, and for at least MIN_MS so the braid can be
-      // seen even when the page is already cached. Clicking pauses it (the loose strands
-      // sway while it waits) and holds the page back until it's clicked again; Esc skips it.
-      (function () {
-        const MIN_MS = 1200;
-        const loader = document.getElementById("loader");
-        let seen = false;
-        try {
-          seen = sessionStorage.getItem("minesa-loader") === "seen";
-          sessionStorage.setItem("minesa-loader", "seen");
-        } catch {}
-        if (seen) {
-          loader.remove();
-          return;
-        }
-
-        const dark = !matchMedia("(prefers-color-scheme: light)").matches;
-        const bar = braidProgress(loader.querySelector("canvas"), {
-          colors: ["#6b4f42", "#ab8673", "#c9a28d"],
-          grey: dark ? "#3a3a3a" : "#d9d4d1",
-          blend: 24,
-        });
-        if (matchMedia("(hover: none)").matches) loader.lastElementChild.textContent = "Tap to pause";
-
-        // Real progress is the share of the page's eager images and its fonts that are in;
-        // a slow creep towards 90% keeps the braid moving while the first bytes arrive.
-        let total = 1;
-        let loaded = 0;
-        const start = performance.now();
-        const tick = () => {
-          const creep = 0.9 * (1 - Math.exp(-(performance.now() - start) / 1800));
-          const v = Math.max((loaded / total) * 0.9, creep);
-          bar.set(v);
-          loader.setAttribute("aria-valuenow", Math.round(v * 100));
-        };
-        const timer = setInterval(tick, 60);
-        document.addEventListener("DOMContentLoaded", () => {
-          const imgs = [...document.images].filter((img) => img.loading !== "lazy");
-          total = imgs.length + 1;
-          imgs.forEach((img) => {
-            if (img.complete) loaded++;
-            else ["load", "error"].forEach((type) => img.addEventListener(type, () => loaded++, { once: true }));
-          });
-          document.fonts.ready.then(() => loaded++);
-        });
-
-        let ready = false;
-        let paused = false;
-        let leaving = false;
-
-        function fade() {
-          clearInterval(timer);
-          removeEventListener("keydown", onKey);
-          loader.classList.add("is-done");
-          setTimeout(() => {
-            bar.stop();
-            loader.remove();
-            document.dispatchEvent(new Event("loader:done"));
-          }, 500);
-        }
-
-        // Leave once the page has loaded, the minimum time is up and nobody is holding it.
-        function leave() {
-          if (leaving || !ready || paused) return;
-          const wait = start + MIN_MS - performance.now();
-          if (wait > 0) return setTimeout(leave, wait);
-          leaving = true;
-          clearInterval(timer);
-          bar.set(1);
-          loader.setAttribute("aria-valuenow", 100);
-          // Let the braid reach the end first.
-          setTimeout(fade, 450);
-        }
-
-        loader.addEventListener("click", () => {
-          if (leaving) return;
-          paused = !paused;
-          bar.pause(paused);
-          leave();
-        });
-        function onKey(event) {
-          if (event.key !== "Escape" || leaving) return;
-          leaving = true;
-          fade();
-        }
-        addEventListener("keydown", onKey);
-
-        const finish = () => {
-          ready = true;
-          leave();
-        };
-        document.readyState === "complete" ? finish() : addEventListener("load", finish, { once: true });
-      })();
-    </script>
     <nav class="site-nav" aria-label="Main">
       <a class="site-nav__item site-nav__item--team" href="./team.html">
         <img src="./assets/navigation-assets/TEAM%20STAMP.svg" alt="" width="50" height="50" />
@@ -380,6 +286,11 @@
             We're bringing fun back to<br />
             apps and your computer
           </h1>
+
+          <div class="home-play">
+            <a href="https://dungeonblitzr.theminesa.studio/web" class="home-play__button">Play Dungeon Blitz: R</a>
+            <p>Free in your browser · No download needed</p>
+          </div>
 
           <ul>
             <li>
