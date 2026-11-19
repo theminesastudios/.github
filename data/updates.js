@@ -7,6 +7,19 @@
 // date is ISO (YYYY-MM-DD). version is optional: posts without one show the project instead.
 window.MINESA_UPDATES = [
   {
+    slug: "2026-11-19",
+    date: "2026-11-19",
+    project: "Dungeon Blitz R",
+    version: "2026.11.19",
+    image: "assets/updates/2026-11-19-cover.webp",
+    imageWidth: 1447,
+    imageHeight: 1087,
+    imageAlt: "Necromancer as a rift mode image covering",
+    title: "Dungeon Rifts are here",
+    summary: "Weekly Rift affixes come to Dread runs, along with clearer combat feedback, easier Neo's Quests, Paladin balance changes and a batch of bug fixes.",
+    body: "data/updates/2026-11-19.md",
+  },
+  {
     slug: "2026-11-12",
     date: "2026-11-12",
     project: "Dungeon Blitz R",
