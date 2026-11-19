@@ -3,3 +3,4 @@ Allow: /
 Disallow: /post-maker.html
 
 Sitemap: https://theminesa.studio/sitemap.xml
+Sitemap: https://theminesa.studio/dungeonblitzr-web/sitemap.xml
