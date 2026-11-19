@@ -109,6 +109,19 @@ section > ul {
   align-items: center;
 }
 
+@media (max-height: 720px) {
+  body,
+  main {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
 .home-play {
   margin: 24px 16px 0;
   text-align: center;
